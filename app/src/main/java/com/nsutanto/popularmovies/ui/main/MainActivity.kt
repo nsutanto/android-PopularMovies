@@ -1,7 +1,8 @@
-package com.nsutanto.popularmovies
+package com.nsutanto.popularmovies.ui.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.nsutanto.popularmovies.R
 
 class MainActivity : AppCompatActivity() {
 
