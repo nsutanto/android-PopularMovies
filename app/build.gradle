@@ -22,12 +22,67 @@ android {
     }
 }
 
+ext {
+    support_library_version = '28.0.0'
+    anko_version = '0.10.5'
+    dagger_version = '2.17'
+    okhttp_version = '3.11.0'
+    retrofit_version = '2.4.0'
+    stetho_version = '1.5.0'
+    java_faker_version = '0.16'
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.support:appcompat-v7:$support_library_version"
+    implementation "com.android.support:support-annotations:$support_library_version"
+    implementation "com.android.support:design:$support_library_version"
+    implementation "com.android.support:support-v4:$support_library_version"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+    implementation "org.jetbrains.anko:anko-appcompat-v7-commons:$anko_version"
+
+    /* Material Design */
+    implementation "com.android.support:cardview-v7:$support_library_version"
+
+    /* Network Libraries */
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    /* Functional Programming */
+    implementation 'io.reactivex:rxjava:1.3.8'
+    implementation 'io.reactivex:rxandroid:1.2.1@aar'
+
+    /* Debug Tools */
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'net.hockeyapp.android:HockeySDK:5.1.1'
+
+    /* Dependency Injection */
+    implementation "com.google.dagger:dagger-android:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    debugImplementation "com.facebook.stetho:stetho:$stetho_version"
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+
+    /* Test Dependencies */
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.19.1'
+    testImplementation "com.github.javafaker:javafaker:$java_faker_version"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    testImplementation 'junit:junit:4.12'
+
+    /* Android Test Implementation - Use our shared library, cucumber, espresso, etc have been defined there */
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
+    androidTestImplementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    androidTestImplementation "com.github.javafaker:javafaker:$java_faker_version"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
