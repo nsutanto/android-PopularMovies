@@ -3,11 +3,11 @@ package com.nsutanto.popularmovies.data.api
 import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.data.model.Review
 import com.nsutanto.popularmovies.data.model.Video
+import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
-import rx.Observable
 
-interface tmdb {
+interface TMDBService {
 
     @GET("movie/popular")
     fun getPopularMovie(): Observable<Movie>
