@@ -16,6 +16,6 @@ class APIFactory {
             .baseUrl(AppConstants.BASE_URL)
             .build()
 
-        return retrofit.create(TMDBService::class.java);
+        return retrofit.create(TMDBService::class.java)
     }
 }
