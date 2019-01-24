@@ -23,11 +23,10 @@ constructor(private val view: MainContract.View,
     }
 
     override fun stop() {
-
+        apiRequest.clear()
     }
 
     private fun handleGetPopularMovies(movies: PopularMovieResult) {
-
     }
 
     private fun handleNetworkError(e: Throwable) {
