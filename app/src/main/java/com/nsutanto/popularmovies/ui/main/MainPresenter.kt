@@ -9,8 +9,8 @@ import javax.inject.Inject
 
 class MainPresenter
 @Inject
-constructor(val view: MainContract.View,
-            val api: ApiSource
+constructor(private val view: MainContract.View,
+            private val api: ApiSource
 ) : MainContract.Presenter {
 
     private var apiRequest = CompositeDisposable()
