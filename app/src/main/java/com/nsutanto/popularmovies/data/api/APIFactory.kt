@@ -1,5 +1,7 @@
 package com.nsutanto.popularmovies.data.api
 
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.GsonBuilder
 import com.nsutanto.popularmovies.utils.AppConstants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,12 +15,15 @@ import javax.inject.Singleton
 class APIFactory @Inject
 constructor() {
 
-    private lateinit var client: OkHttpClient
-
     fun createTMDBService(): TMDBService {
+
+        val gson = GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create()
+
         val retrofit = Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(AppConstants.BASE_URL)
             .client(createHttpClient())
             .build()
@@ -28,7 +33,7 @@ constructor() {
 
     private fun createHttpClient(): OkHttpClient {
 
-        client = OkHttpClient()
+        val client = OkHttpClient()
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         return client.newBuilder()
