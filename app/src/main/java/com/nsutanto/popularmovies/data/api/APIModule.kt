@@ -6,9 +6,7 @@ import javax.inject.Singleton
 
 
 @Module
-class ApiModule
-constructor() {
-
+class ApiModule {
     @Provides
     @Singleton
     fun getApiSource(repo: APIRepository): ApiSource = repo
