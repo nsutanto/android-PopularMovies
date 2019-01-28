@@ -2,6 +2,7 @@ package com.nsutanto.popularmovies
 
 import android.app.Activity
 import android.app.Application
+import com.nsutanto.popularmovies.di.component.AppComponent
 import com.nsutanto.popularmovies.di.component.DaggerAppComponent
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -12,13 +13,18 @@ class PopularMoviesApp : Application(), HasActivityInjector {
     @Inject
     lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
+    private lateinit var component: AppComponent
+
     override fun activityInjector() = activityDispatchingAndroidInjector
 
     override fun onCreate() {
         super.onCreate()
-        DaggerAppComponent.builder()
+        component = DaggerAppComponent.builder()
             .application(this)
             .build()
-            .inject(this)
+
+        component.inject(this)
     }
+
+    fun getApplicationComponent(): AppComponent = component
 }
