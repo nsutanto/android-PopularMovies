@@ -6,8 +6,16 @@ import com.nsutanto.popularmovies.ui.base.presenter.BasePresenter
 interface MainContract {
     interface View {
         fun displayMovies(movies: List<Movie>)
+
+        fun displayMovieFragment()
+
+        fun displayTVFragment()
     }
 
-    interface Presenter : BasePresenter
+    interface Presenter : BasePresenter {
+        fun onMovieTabClicked()
+
+        fun onTVTabClicked()
+    }
 }
 
