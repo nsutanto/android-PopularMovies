@@ -16,7 +16,6 @@ constructor(private val view: MainContract.View,
     private var apiRequest = CompositeDisposable()
 
     override fun start() {
-
         apiRequest.add(api.getPopularMovies()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ movieResponse -> handleGetPopularMovies(movieResponse) }, { e -> handleNetworkError(e) }))
@@ -26,8 +25,16 @@ constructor(private val view: MainContract.View,
         apiRequest.clear()
     }
 
+    override fun onMovieTabClicked() {
+        view.displayMovieFragment()
+    }
+
+    override fun onTVTabClicked() {
+        view.displayTVFragment()
+    }
+
     private fun handleGetPopularMovies(movieResponse: MovieResponse) {
-        view.displayMovies(movieResponse.results)
+        //view.displayMovies(movieResponse.results)
     }
 
     private fun handleNetworkError(e: Throwable) {
