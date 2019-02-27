@@ -16,7 +16,7 @@ constructor() :
     }
 
     // Main Activity Listener
-    override fun onPopularMovieUpdate(movies: List<Movie>) {
+    override fun displayPopularMovies(movies: List<Movie>) {
 
     }
 }
