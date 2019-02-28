@@ -10,6 +10,8 @@ interface MainContract {
         fun displayMovieFragment()
 
         fun displayTVFragment()
+
+        fun displayPopularMovies(movies: List<Movie>)
     }
 
     interface Presenter : BasePresenter {
