@@ -1,16 +1,16 @@
 package com.nsutanto.popularmovies.ui.main
 
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.ui.base.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import android.content.Context
-import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
 import com.nsutanto.popularmovies.ui.main.tv.TVFragment
 
@@ -27,6 +27,7 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     private lateinit var movieFragment: MovieFragment
     private lateinit var tvFragment: TVFragment
+    private lateinit var mainActivityListener: MainActivityListener
 
     private lateinit var viewAdapter: MovieAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -38,6 +39,8 @@ class MainActivity : BaseActivity(), MainContract.View {
         movieFragment = MovieFragment()
         tvFragment = TVFragment()
         nav_bar.setOnNavigationItemSelectedListener { navigationItemSelectedListener(it) }
+
+        //mainActivityListener = application as MainActivityListener
 
         //setupRecyclerView()
     }
@@ -52,11 +55,17 @@ class MainActivity : BaseActivity(), MainContract.View {
     }
 
     override fun displayMovieFragment() {
-        setupContent(movieFragment!!, NavBar.MOVIE)
+        setupContent(movieFragment, NavBar.MOVIE)
     }
 
     override fun displayTVFragment() {
-        setupContent(tvFragment!!, NavBar.TV)
+        setupContent(tvFragment, NavBar.TV)
+    }
+
+    // Main Activity Listener
+    override fun displayPopularMovies(movies: List<Movie>) {
+        movieFragment.updateMovies(movies)
+        //mainActivityListener.displayPopularMovies(movies)
     }
 
     private fun setupContent(newContent: Fragment, navItem: NavBar) {
