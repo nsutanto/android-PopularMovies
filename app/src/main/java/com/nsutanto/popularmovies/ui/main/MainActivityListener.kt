@@ -4,5 +4,5 @@ import com.nsutanto.popularmovies.data.model.Movie
 
 interface MainActivityListener {
 
-    fun onPopularMovieUpdate(movies: List<Movie>)
+    fun displayPopularMovies(movies: List<Movie>)
 }
