@@ -9,7 +9,6 @@ import javax.inject.Inject
 import android.content.Context
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
 import com.nsutanto.popularmovies.ui.main.tv.TVFragment
@@ -36,18 +35,18 @@ class MainActivity : BaseActivity(), MainContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // set everything at the beginning
         movieFragment = MovieFragment()
         tvFragment = TVFragment()
 
-        //displayMovieFragment()
+        // display movie fragment by default
+        displayMovieFragment()
 
+        // setup nav bar
         nav_bar.setOnNavigationItemSelectedListener { navigationItemSelectedListener(it) }
-
-        //mainActivityListener = application as MainActivityListener
-
-        //setupRecyclerView()
     }
 
+    // View Methods
     override fun onStart() {
         super.onStart()
         presenter.start()
@@ -67,10 +66,10 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     // Main Activity Listener
     override fun displayPopularMovies(movies: List<Movie>) {
-        //movieFragment.updatePopularMovies(movies)
-        //mainActivityListener.displayPopularMovies(movies)
+        movieFragment.updatePopularMovies(movies)
     }
 
+    // Private Methods
     private fun setupContent(newContent: Fragment, navItem: NavBar) {
         nav_bar.menu.getItem(navItem.value).isChecked = true
 
@@ -89,15 +88,6 @@ class MainActivity : BaseActivity(), MainContract.View {
             R.id.nav_tv -> presenter.onTVTabClicked()
         }
         return true
-    }
-
-    private fun setupRecyclerView() {
-
-        val numColumn = calculateNoOfColumns(this)
-        viewManager = GridLayoutManager(this, numColumn)
-        viewAdapter = MovieAdapter()
-        //rv_movie.adapter = viewAdapter
-        //rv_movie.layoutManager = viewManager
     }
 
     private fun calculateNoOfColumns(context: Context): Int {
