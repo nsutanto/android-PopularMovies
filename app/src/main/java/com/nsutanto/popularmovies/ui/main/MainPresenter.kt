@@ -41,7 +41,7 @@ constructor(private val view: MainContract.View,
     }
 
     private fun handleGetPopularMovies(movieResponse: MovieResponse) {
-        view.displayMovies(movieResponse.results)
+        view.displayPopularMovies(movieResponse.results)
     }
 
     private fun handleNetworkError(e: Throwable) {
