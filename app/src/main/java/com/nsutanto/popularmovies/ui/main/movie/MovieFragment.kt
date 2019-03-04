@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.ui.base.view.BaseFragment
+import com.nsutanto.popularmovies.ui.main.MovieAdapter
 import com.nsutanto.popularmovies.viewmodels.MovieViewModel
+import kotlinx.android.synthetic.main.fragment_movie.*
 import javax.inject.Inject
 
 class MovieFragment : BaseFragment(), MovieContract.View {
@@ -20,8 +22,12 @@ class MovieFragment : BaseFragment(), MovieContract.View {
 
     private lateinit var vm: MovieViewModel
 
+    private lateinit var popularMoviesAdapter: MovieAdapter
+    private lateinit var viewManager: RecyclerView.LayoutManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setPopularMoviesRV()
 
         /*
         vm = activity?.run {
@@ -51,7 +57,6 @@ class MovieFragment : BaseFragment(), MovieContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     override fun onStart() {
@@ -64,14 +69,21 @@ class MovieFragment : BaseFragment(), MovieContract.View {
         presenter.stop()
     }
 
+    /*
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         //normalFragmentListener = context as NormalFragmentListener
     }
+    */
 
-    fun updateMovies(movies: List<Movie>) {
-
+    fun updatePopularMovies(movies: List<Movie>) {
+        //popularMoviesAdapter.setMovies(movies)
     }
 
-
+    private fun setPopularMoviesRV() {
+        viewManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        popularMoviesAdapter = MovieAdapter()
+        rv_popular_movie.adapter = popularMoviesAdapter
+        rv_popular_movie.layoutManager = viewManager
+    }
 }
