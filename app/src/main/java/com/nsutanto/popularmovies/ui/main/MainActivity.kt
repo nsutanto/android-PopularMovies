@@ -38,6 +38,9 @@ class MainActivity : BaseActivity(), MainContract.View {
 
         movieFragment = MovieFragment()
         tvFragment = TVFragment()
+
+        //displayMovieFragment()
+
         nav_bar.setOnNavigationItemSelectedListener { navigationItemSelectedListener(it) }
 
         //mainActivityListener = application as MainActivityListener
@@ -64,7 +67,7 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     // Main Activity Listener
     override fun displayPopularMovies(movies: List<Movie>) {
-        movieFragment.updateMovies(movies)
+        //movieFragment.updatePopularMovies(movies)
         //mainActivityListener.displayPopularMovies(movies)
     }
 
