@@ -1,22 +1,15 @@
 package com.nsutanto.popularmovies.ui.main.movie
 
-import com.nsutanto.popularmovies.data.model.Movie
-import com.nsutanto.popularmovies.ui.main.MainActivityListener
 import javax.inject.Inject
 
 class MoviePresenter @Inject
 constructor() :
-    MovieContract.Presenter, MainActivityListener {
+    MovieContract.Presenter {
 
     override fun start() {
     }
 
     override fun stop() {
-
-    }
-
-    // Main Activity Listener
-    override fun displayPopularMovies(movies: List<Movie>) {
 
     }
 }
