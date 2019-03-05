@@ -1,5 +1,6 @@
 package com.nsutanto.popularmovies.ui.main
 
+import android.app.Activity
 import android.os.Bundle
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
@@ -9,9 +10,12 @@ import javax.inject.Inject
 import android.content.Context
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
 import com.nsutanto.popularmovies.ui.main.tv.TVFragment
+import com.nsutanto.popularmovies.viewmodel.MainViewModel
+import com.nsutanto.popularmovies.viewmodel.ViewModelFactory
 
 
 class MainActivity : BaseActivity(), MainContract.View {
@@ -24,8 +28,11 @@ class MainActivity : BaseActivity(), MainContract.View {
     @Inject
     lateinit var presenter: MainContract.Presenter
 
-    private lateinit var movieFragment: MovieFragment
-    private lateinit var tvFragment: TVFragment
+    @Inject
+    lateinit var factory: ViewModelFactory
+
+    private var movieFragment = MovieFragment()
+    private var tvFragment = TVFragment()
     private lateinit var mainActivityListener: MainActivityListener
 
     private lateinit var viewAdapter: MovieAdapter
@@ -34,10 +41,6 @@ class MainActivity : BaseActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // set everything at the beginning
-        movieFragment = MovieFragment()
-        tvFragment = TVFragment()
 
         // display movie fragment by default
         displayMovieFragment()
@@ -52,6 +55,14 @@ class MainActivity : BaseActivity(), MainContract.View {
         presenter.start()
     }
 
+    override fun getViewModel(): MainViewModel {
+        return ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
+    }
+
+    override fun getActivity(): Activity {
+        return this
+    }
+
     override fun displayMovies(movies: List<Movie>) {
         viewAdapter.setMovies(movies)
     }
@@ -64,9 +75,20 @@ class MainActivity : BaseActivity(), MainContract.View {
         setupContent(tvFragment, NavBar.TV)
     }
 
-    // Main Activity Listener
-    override fun displayPopularMovies(movies: List<Movie>) {
+    override fun displayPopularMovies(movies: List<Movie>?) {
         movieFragment.updatePopularMovies(movies)
+    }
+
+    override fun displayTopRatedMovies(movies: List<Movie>?) {
+        movieFragment.updateTopRatedMovies(movies)
+    }
+
+    override fun displayPopularTV(movies: List<Movie>?) {
+        tvFragment.updatePopularTV(movies)
+    }
+
+    override fun displayTopRatedTV(movies: List<Movie>?) {
+        tvFragment.updateTopRatedTV(movies)
     }
 
     // Private Methods
@@ -88,6 +110,10 @@ class MainActivity : BaseActivity(), MainContract.View {
             R.id.nav_tv -> presenter.onTVTabClicked()
         }
         return true
+    }
+
+    private fun getCurrentFragment() : Fragment? {
+        return supportFragmentManager.findFragmentById(R.id.content_frame)
     }
 
     private fun calculateNoOfColumns(context: Context): Int {
