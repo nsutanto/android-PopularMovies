@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
+import com.nsutanto.popularmovies.data.model.MovieResponse
 import com.nsutanto.popularmovies.ui.base.view.BaseFragment
 import com.nsutanto.popularmovies.ui.main.MovieAdapter
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
@@ -37,11 +38,11 @@ class TVFragment : BaseFragment(), TVContract.View {
             ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        mainViewModel.popularTV.observe(this, Observer<List<Movie>> {
+        mainViewModel.popularTV.observe(this, Observer<MovieResponse> {
                 movies -> updatePopularTV(movies)
         })
 
-        mainViewModel.topRatedTV.observe(this, Observer<List<Movie>> {
+        mainViewModel.topRatedTV.observe(this, Observer<MovieResponse> {
                 movies -> updateTopRatedTV(movies)
         })
     }
@@ -75,15 +76,15 @@ class TVFragment : BaseFragment(), TVContract.View {
         topRatedTVAdapter?.setMovies(movies)
     }
 
-    fun updatePopularTV(movies: List<Movie>?) {
+    fun updatePopularTV(movieResponse: MovieResponse) {
         //presenter.onUpdatePopularTV(movies)
-        popularTVAdapter?.setMovies(movies)
+        popularTVAdapter?.setMovies(movieResponse.results)
         pb_popular_tv.visibility = View.GONE
     }
 
-    fun updateTopRatedTV(movies: List<Movie>?) {
+    fun updateTopRatedTV(movieResponse: MovieResponse) {
         //presenter.onUpdateTopRatedTV(movies)
-        topRatedTVAdapter?.setMovies(movies)
+        topRatedTVAdapter?.setMovies(movieResponse.results)
         pb_top_rated_tv.visibility = View.GONE
     }
 
