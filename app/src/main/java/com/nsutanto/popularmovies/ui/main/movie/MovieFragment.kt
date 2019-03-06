@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
+import com.nsutanto.popularmovies.data.model.MovieResponse
 import com.nsutanto.popularmovies.ui.base.view.BaseFragment
 import com.nsutanto.popularmovies.ui.main.MovieAdapter
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
@@ -17,18 +18,21 @@ import com.nsutanto.popularmovies.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_movie.*
 import javax.inject.Inject
 
+
+
 class MovieFragment : BaseFragment(), MovieContract.View {
 
     @Inject
     lateinit var presenter: MoviePresenter
 
-    private lateinit var mainViewModel: MainViewModel
-
     @Inject
     lateinit var factory: ViewModelFactory
 
-    private var popularMoviesAdapter: MovieAdapter? = null
-    private var topRatedMoviesAdapter: MovieAdapter? = null
+    private lateinit var mainViewModel: MainViewModel
+    private var popularMovies: MovieResponse? = null
+    private var topRatedMovies: MovieResponse? = null
+    private lateinit var popularMoviesAdapter: MovieAdapter
+    private lateinit var topRatedMoviesAdapter: MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +41,11 @@ class MovieFragment : BaseFragment(), MovieContract.View {
             ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
 
-        mainViewModel.popularMovies.observe(this, Observer<List<Movie>> {
+        mainViewModel.popularMovies.observe(this, Observer<MovieResponse> {
                 movies -> updatePopularMovies(movies)
         })
 
-        mainViewModel.topRatedMovies.observe(this, Observer<List<Movie>> {
+        mainViewModel.topRatedMovies.observe(this, Observer<MovieResponse> {
                 movies -> updateTopRatedMovies(movies)
         })
     }
@@ -55,6 +59,8 @@ class MovieFragment : BaseFragment(), MovieContract.View {
         super.onViewCreated(view, savedInstanceState)
         setPopularMoviesRV()
         setTopRatedMoviesRV()
+
+        popularMovies?.let { updatePopularMovies(popularMovies!!)}
     }
 
     override fun onStart() {
@@ -65,15 +71,18 @@ class MovieFragment : BaseFragment(), MovieContract.View {
     override fun onStop() {
         super.onStop()
         presenter.stop()
+        onSaveInstanceState(Bundle())
     }
 
-    fun updatePopularMovies(movies: List<Movie>?) {
-        popularMoviesAdapter?.setMovies(movies)
+    fun updatePopularMovies(movieResponse: MovieResponse) {
+        popularMovies = movieResponse
+        popularMoviesAdapter.setMovies(popularMovies?.results)
         pb_popular_movie.visibility = View.GONE
     }
 
-    fun updateTopRatedMovies(movies: List<Movie>?) {
-        topRatedMoviesAdapter?.setMovies(movies)
+    fun updateTopRatedMovies(movieResponse: MovieResponse) {
+        topRatedMovies = movieResponse
+        topRatedMoviesAdapter.setMovies(topRatedMovies?.results)
         pb_top_rated_movie.visibility = View.GONE
     }
 
