@@ -5,15 +5,7 @@ import com.nsutanto.popularmovies.ui.base.presenter.BasePresenter
 
 class TVContract {
 
-    interface View {
-        fun displayPopularTV(movies: List<Movie>?)
+    interface View
 
-        fun displayTopRatedTV(movies: List<Movie>?)
-    }
-
-    interface Presenter : BasePresenter {
-        fun onUpdatePopularTV(movies: List<Movie>?)
-
-        fun onUpdateTopRatedTV(movies: List<Movie>?)
-    }
+    interface Presenter : BasePresenter
 }
