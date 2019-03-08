@@ -3,8 +3,8 @@ package com.nsutanto.popularmovies.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nsutanto.popularmovies.data.api.ApiSource
-import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.data.model.MovieResponse
+import com.nsutanto.popularmovies.data.model.TVResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
@@ -15,8 +15,8 @@ class MainViewModel
 
     val popularMovies = MutableLiveData<MovieResponse>()
     val topRatedMovies = MutableLiveData<MovieResponse>()
-    val popularTV = MutableLiveData<MovieResponse>()
-    val topRatedTV = MutableLiveData<MovieResponse>()
+    val popularTV = MutableLiveData<TVResponse>()
+    val topRatedTV = MutableLiveData<TVResponse>()
 
     fun clear() {
         apiRequest.clear()
@@ -62,12 +62,12 @@ class MainViewModel
         topRatedMovies.value = movieResponse
     }
 
-    private fun handleGetPopularTV(movieResponse: MovieResponse) {
-        popularTV.value = movieResponse
+    private fun handleGetPopularTV(tvResponse: TVResponse) {
+        popularTV.value = tvResponse
     }
 
-    private fun handleGetTopRatedTV(movieResponse: MovieResponse) {
-        topRatedTV.value = movieResponse
+    private fun handleGetTopRatedTV(tvResponse: TVResponse) {
+        topRatedTV.value = tvResponse
     }
 
     private fun handleNetworkError(e: Throwable) {
