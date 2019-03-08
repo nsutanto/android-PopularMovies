@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.MovieResponse
 import com.nsutanto.popularmovies.ui.base.view.BaseFragment
-import com.nsutanto.popularmovies.ui.main.MovieAdapter
 import com.nsutanto.popularmovies.utils.AppConstants.INVALID_ACTIVITY
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.ViewModelFactory
