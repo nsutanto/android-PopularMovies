@@ -9,9 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
-import com.nsutanto.popularmovies.data.model.MovieResponse
+import com.nsutanto.popularmovies.data.model.TVResponse
 import com.nsutanto.popularmovies.ui.base.view.BaseFragment
-import com.nsutanto.popularmovies.ui.main.MovieAdapter
 import com.nsutanto.popularmovies.utils.AppConstants.INVALID_ACTIVITY
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.ViewModelFactory
@@ -27,11 +26,9 @@ class TVFragment : BaseFragment(), TVContract.View {
     lateinit var factory: ViewModelFactory
 
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var popularTVAdapter: MovieAdapter
-    private lateinit var topRatedTVAdapter: MovieAdapter
+    private lateinit var popularTVAdapter: TVAdapter
+    private lateinit var topRatedTVAdapter: TVAdapter
 
-    private var popularTV: MovieResponse? = null
-    private var topRatedTV: MovieResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +44,6 @@ class TVFragment : BaseFragment(), TVContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
-
-        popularTV?.let { updatePopularTV(popularTV!!)}
-        topRatedTV?.let { updateTopRatedTV(topRatedTV!!)}
     }
 
     override fun onStart() {
@@ -62,15 +56,13 @@ class TVFragment : BaseFragment(), TVContract.View {
         presenter.stop()
     }
 
-    private fun updatePopularTV(movieResponse: MovieResponse) {
-        popularTV = movieResponse
-        popularTVAdapter.setMovies(popularTV?.results)
+    override fun showPopularTV(tvResponse: TVResponse) {
+        popularTVAdapter.setTVs(tvResponse.results)
         pb_popular_tv.visibility = View.GONE
     }
 
-    private fun updateTopRatedTV(movieResponse: MovieResponse) {
-        topRatedTV = movieResponse
-        topRatedTVAdapter.setMovies(topRatedTV?.results)
+    override fun showTopRatedTV(tvResponse: TVResponse) {
+        topRatedTVAdapter.setTVs(tvResponse.results)
         pb_top_rated_tv.visibility = View.GONE
     }
 
@@ -85,8 +77,8 @@ class TVFragment : BaseFragment(), TVContract.View {
     }
 
     private fun createAdapters() {
-        popularTVAdapter = MovieAdapter()
-        topRatedTVAdapter = MovieAdapter()
+        popularTVAdapter = TVAdapter()
+        topRatedTVAdapter = TVAdapter()
     }
 
     private fun setViewModel() {
@@ -94,12 +86,12 @@ class TVFragment : BaseFragment(), TVContract.View {
             ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
         } ?: throw Exception(INVALID_ACTIVITY)
 
-        mainViewModel.popularTV.observe(this, Observer<MovieResponse> {
-                movies -> updatePopularTV(movies)
+        mainViewModel.popularTV.observe(this, Observer<TVResponse> {
+                tvs -> presenter.onUpdatedPopularTV(tvs)
         })
 
-        mainViewModel.topRatedTV.observe(this, Observer<MovieResponse> {
-                movies -> updateTopRatedTV(movies)
+        mainViewModel.topRatedTV.observe(this, Observer<TVResponse> {
+                tvs -> presenter.onUpdatedTopRatedTV(tvs)
         })
     }
 }
