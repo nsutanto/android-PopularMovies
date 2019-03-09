@@ -4,9 +4,8 @@ import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import javax.inject.Inject
 
 class MainPresenter
-@Inject
-constructor(private val view: MainContract.View)
-    : MainContract.Presenter {
+    @Inject
+    constructor(private val view: MainContract.View): MainContract.Presenter {
 
     private var mainViewModel: MainViewModel? = null
 
@@ -23,10 +22,10 @@ constructor(private val view: MainContract.View)
     }
 
     override fun onMovieTabClicked() {
-        view.displayMovieFragment()
+        view.displayMovieScreen()
     }
 
     override fun onTVTabClicked() {
-        view.displayTVFragment()
+        view.displayTVScreen()
     }
 }
