@@ -1,17 +1,15 @@
 package com.nsutanto.popularmovies.ui.main
 
-import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.ui.base.presenter.BasePresenter
+import com.nsutanto.popularmovies.viewmodel.MainViewModel
 
 interface MainContract {
     interface View {
-        fun displayMovies(movies: List<Movie>)
+        fun displayMovieScreen()
 
-        fun displayMovieFragment()
+        fun displayTVScreen()
 
-        fun displayTVFragment()
-
-        fun displayPopularMovies(movies: List<Movie>)
+        fun getViewModel(): MainViewModel
     }
 
     interface Presenter : BasePresenter {
