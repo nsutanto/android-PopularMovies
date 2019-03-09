@@ -1,9 +1,7 @@
 package com.nsutanto.popularmovies.ui.main
 
-import android.app.Activity
 import android.os.Bundle
 import com.nsutanto.popularmovies.R
-import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.ui.base.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
@@ -11,14 +9,16 @@ import android.content.Context
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.RecyclerView
+import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
 import com.nsutanto.popularmovies.ui.main.tv.TVFragment
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.ViewModelFactory
 
 
-class MainActivity : BaseActivity(), MainContract.View {
+class MainActivity : BaseActivity(),
+                    MainContract.View,
+                    MovieFragment.IMovieListener {
 
     private enum class NavBar(val value: Int) {
         MOVIE(0),
@@ -33,17 +33,13 @@ class MainActivity : BaseActivity(), MainContract.View {
 
     private var movieFragment = MovieFragment()
     private var tvFragment = TVFragment()
-    private lateinit var mainActivityListener: MainActivityListener
-
-    private lateinit var viewAdapter: MovieAdapter
-    private lateinit var viewManager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // display movie fragment by default
-        displayMovieFragment()
+        displayMovieScreen()
 
         // setup nav bar
         nav_bar.setOnNavigationItemSelectedListener { navigationItemSelectedListener(it) }
@@ -59,37 +55,19 @@ class MainActivity : BaseActivity(), MainContract.View {
         return ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
     }
 
-    override fun getActivity(): Activity {
-        return this
-    }
-
-    override fun displayMovies(movies: List<Movie>) {
-        viewAdapter.setMovies(movies)
-    }
-
-    override fun displayMovieFragment() {
+    override fun displayMovieScreen() {
         setupContent(movieFragment, NavBar.MOVIE)
     }
 
-    override fun displayTVFragment() {
+    override fun displayTVScreen() {
         setupContent(tvFragment, NavBar.TV)
     }
 
-    override fun displayPopularMovies(movies: List<Movie>?) {
-        movieFragment.updatePopularMovies(movies)
+    // Movie Screen Listener
+    override fun onMovieClicked(movie: Movie) {
+
     }
 
-    override fun displayTopRatedMovies(movies: List<Movie>?) {
-        movieFragment.updateTopRatedMovies(movies)
-    }
-
-    override fun displayPopularTV(movies: List<Movie>?) {
-        tvFragment.updatePopularTV(movies)
-    }
-
-    override fun displayTopRatedTV(movies: List<Movie>?) {
-        tvFragment.updateTopRatedTV(movies)
-    }
 
     // Private Methods
     private fun setupContent(newContent: Fragment, navItem: NavBar) {
