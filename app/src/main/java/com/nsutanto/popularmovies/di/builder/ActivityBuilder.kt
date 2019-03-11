@@ -1,5 +1,7 @@
 package com.nsutanto.popularmovies.di.builder
 
+import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
+import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivityModule
 import com.nsutanto.popularmovies.ui.main.MainActivity
 import com.nsutanto.popularmovies.ui.main.MainActivityModule
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
@@ -18,8 +20,6 @@ abstract class MainFragmentsModule {
     abstract fun tvFragment(): TVFragment
 }
 
-
-
 @Module
 interface ActivityBuilder {
 
@@ -29,5 +29,11 @@ interface ActivityBuilder {
         MainFragmentsModule::class
     ])
     fun mainActivity(): MainActivity
+
+    @ContributesAndroidInjector(modules =
+    [
+        MovieDetailActivityModule::class
+    ])
+    fun detailMovieActivity(): MovieDetailActivity
 }
 
