@@ -39,6 +39,9 @@ class MovieDetailActivity : BaseActivity(),
         createAdapters()
         setRecyclerView()
         setViewModel()
+
+        collapse_toolbar_layout.isTitleEnabled = false
+        toolbar.title = "My Title"
     }
 
     // View Methods
@@ -49,6 +52,11 @@ class MovieDetailActivity : BaseActivity(),
 
     override fun showMovieDetail(movie: Movie) {
         tv_overview.text = movie.overview
+
+        val backdropPath = movie.backdropPath
+        if (backdropPath != "") Picasso.get()
+            .load(AppConstants.BASE_URL_POSTER_BIG + backdropPath)
+            .into(app_bar_image)
 
         val posterPath = movie.posterPath
         if (posterPath != "") Picasso.get()
