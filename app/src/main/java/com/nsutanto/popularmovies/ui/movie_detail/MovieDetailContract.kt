@@ -18,7 +18,7 @@ interface MovieDetailContract {
         fun getViewModel(): MovieDetailViewModel
     }
     interface Presenter : BasePresenter {
-        fun onUpdatedVideos(movieVideos: MovieVideosResponse)
+        fun onUpdatedVideos(videosResponse: MovieVideosResponse)
 
         fun onUpdatedCredits(credits: CreditResponse)
     }
