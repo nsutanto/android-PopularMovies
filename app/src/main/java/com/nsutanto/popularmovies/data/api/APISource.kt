@@ -1,8 +1,6 @@
 package com.nsutanto.popularmovies.data.api
 
-import com.nsutanto.popularmovies.data.model.MovieResponse
-import com.nsutanto.popularmovies.data.model.Review
-import com.nsutanto.popularmovies.data.model.Video
+import com.nsutanto.popularmovies.data.model.*
 import io.reactivex.Observable
 
 interface ApiSource {
@@ -11,16 +9,18 @@ interface ApiSource {
 
     fun getTopRatedMovies(): Observable<MovieResponse>
 
-    fun getMovieVideos(id: String): Observable<Video>
+    fun getMovieVideos(id: Int): Observable<MovieVideosResponse>
 
-    fun getMovieReviews(id: String): Observable<Review>
+    fun getMovieReviews(id: Int): Observable<Review>
 
-    fun getPopularTV(): Observable<MovieResponse>
+    fun getMovieCredit(id: Int): Observable<CreditResponse>
 
-    fun getTopRatedTV(): Observable<MovieResponse>
+    fun getPopularTV(): Observable<TVResponse>
 
-    fun getTVVideos(id: String): Observable<Video>
+    fun getTopRatedTV(): Observable<TVResponse>
 
-    fun getTVReviews(id: String): Observable<Review>
+    fun getTVVideos(id: Int): Observable<MovieVideosResponse>
+
+    fun getTVReviews(id: Int): Observable<Review>
 
 }
