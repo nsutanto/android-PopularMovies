@@ -1,8 +1,6 @@
 package com.nsutanto.popularmovies.data.api
 
-import com.nsutanto.popularmovies.data.model.MovieResponse
-import com.nsutanto.popularmovies.data.model.Review
-import com.nsutanto.popularmovies.data.model.Video
+import com.nsutanto.popularmovies.data.model.*
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -24,32 +22,37 @@ constructor(private val apiFactory: APIFactory) : ApiSource {
             .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getMovieVideos(id: String): Observable<Video> {
+    override fun getMovieVideos(id: Int): Observable<MovieVideosResponse> {
        return tmdbService.getMovieVideos(id)
             .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getMovieReviews(id: String): Observable<Review> {
+    override fun getMovieReviews(id: Int): Observable<Review> {
         return tmdbService.getMovieReviews(id)
             .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getPopularTV(): Observable<MovieResponse> {
+    override fun getMovieCredit(id: Int): Observable<CreditResponse> {
+        return tmdbService.getMovieCredit(id)
+            .subscribeOn(Schedulers.newThread())
+    }
+
+    override fun getPopularTV(): Observable<TVResponse> {
         return tmdbService.getPopularTV()
             .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getTopRatedTV(): Observable<MovieResponse> {
+    override fun getTopRatedTV(): Observable<TVResponse> {
         return tmdbService.getTopRatedTV()
             .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getTVVideos(id: String): Observable<Video> {
+    override fun getTVVideos(id: Int): Observable<MovieVideosResponse> {
         return tmdbService.getTVVideos(id)
             .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getTVReviews(id: String): Observable<Review> {
+    override fun getTVReviews(id: Int): Observable<Review> {
         return tmdbService.getTVReviews(id)
             .subscribeOn(Schedulers.newThread())
     }
