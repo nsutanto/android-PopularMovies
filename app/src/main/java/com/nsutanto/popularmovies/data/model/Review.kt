@@ -4,5 +4,5 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Review(val author: String,
-                  val content: String) : Parcelable
+data class Review(val author: String?,
+                  val content: String?) : Parcelable
