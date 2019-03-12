@@ -16,6 +16,9 @@ import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
 import com.nsutanto.popularmovies.data.model.*
+import com.google.android.material.appbar.AppBarLayout
+
+
 
 
 class MovieDetailActivity : BaseActivity(),
@@ -40,8 +43,8 @@ class MovieDetailActivity : BaseActivity(),
         setRecyclerView()
         setViewModel()
 
-        collapse_toolbar_layout.isTitleEnabled = false
-        toolbar.title = "My Title"
+        setSupportActionBar(toolbar_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     // View Methods
@@ -62,6 +65,8 @@ class MovieDetailActivity : BaseActivity(),
         if (posterPath != "") Picasso.get()
             .load(AppConstants.BASE_URL_POSTER_BIG + posterPath)
             .into(iv_poster)
+
+        collapse_toolbar_layout.title = movie.title
     }
 
     override fun showVideos(videosResponse: MovieVideosResponse) {
