@@ -5,9 +5,9 @@ import io.reactivex.Observable
 
 interface ApiSource {
 
-    fun getPopularMovies(): Observable<MovieResponse>
+    fun getPopularMovies(page: Int): Observable<MovieResponse>
 
-    fun getTopRatedMovies(): Observable<MovieResponse>
+    fun getTopRatedMovies(page: Int): Observable<MovieResponse>
 
     fun getMovieVideos(id: Int): Observable<MovieVideosResponse>
 
@@ -15,9 +15,9 @@ interface ApiSource {
 
     fun getMovieCredit(id: Int): Observable<CreditResponse>
 
-    fun getPopularTV(): Observable<TVResponse>
+    fun getPopularTV(page: Int): Observable<TVResponse>
 
-    fun getTopRatedTV(): Observable<TVResponse>
+    fun getTopRatedTV(page: Int): Observable<TVResponse>
 
     fun getTVVideos(id: Int): Observable<MovieVideosResponse>
 
