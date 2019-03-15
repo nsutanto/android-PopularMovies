@@ -4,15 +4,16 @@ import com.nsutanto.popularmovies.data.model.*
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface TMDBService {
 
     // Movie
     @GET("movie/popular")
-    fun getPopularMovie(): Observable<MovieResponse>
+    fun getPopularMovie(@Query("page")page: Int): Observable<MovieResponse>
 
     @GET("movie/top_rated")
-    fun getTopRatedMovie(): Observable<MovieResponse>
+    fun getTopRatedMovie(@Query("page")page: Int): Observable<MovieResponse>
 
     @GET("movie/{id}/videos")
     fun getMovieVideos(@Path("id") id: Int): Observable<MovieVideosResponse>
@@ -25,10 +26,10 @@ interface TMDBService {
 
     // TV
     @GET("tv/popular")
-    fun getPopularTV(): Observable<TVResponse>
+    fun getPopularTV(@Query("page")page: Int): Observable<TVResponse>
 
     @GET("tv/top_rated")
-    fun getTopRatedTV(): Observable<TVResponse>
+    fun getTopRatedTV(@Query("page")page: Int): Observable<TVResponse>
 
     @GET("tv/{id}/videos")
     fun getTVVideos(@Path("id") id: Int): Observable<MovieVideosResponse>
