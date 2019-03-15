@@ -11,14 +11,14 @@ constructor(private val apiFactory: APIFactory) : ApiSource {
 
     private var tmdbService = apiFactory.createTMDBService()
 
-    override fun getPopularMovies(): Observable<MovieResponse> {
+    override fun getPopularMovies(page: Int): Observable<MovieResponse> {
 
-        return tmdbService.getPopularMovie()
+        return tmdbService.getPopularMovie(page)
             .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getTopRatedMovies(): Observable<MovieResponse> {
-        return tmdbService.getTopRatedMovie()
+    override fun getTopRatedMovies(page: Int): Observable<MovieResponse> {
+        return tmdbService.getTopRatedMovie(page)
             .subscribeOn(Schedulers.newThread())
     }
 
@@ -37,13 +37,13 @@ constructor(private val apiFactory: APIFactory) : ApiSource {
             .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getPopularTV(): Observable<TVResponse> {
-        return tmdbService.getPopularTV()
+    override fun getPopularTV(page: Int): Observable<TVResponse> {
+        return tmdbService.getPopularTV(page)
             .subscribeOn(Schedulers.newThread())
     }
 
-    override fun getTopRatedTV(): Observable<TVResponse> {
-        return tmdbService.getTopRatedTV()
+    override fun getTopRatedTV(page: Int): Observable<TVResponse> {
+        return tmdbService.getTopRatedTV(page)
             .subscribeOn(Schedulers.newThread())
     }
 
