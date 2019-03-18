@@ -13,6 +13,10 @@ class MovieDetailPresenter
 
     private var viewModel: MovieDetailViewModel? = null
 
+    override fun create() {
+
+    }
+
     override fun start() {
         viewModel = view.getViewModel()
         viewModel?.getMovieVideos()
