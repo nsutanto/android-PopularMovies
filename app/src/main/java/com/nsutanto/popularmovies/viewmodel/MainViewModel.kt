@@ -22,32 +22,32 @@ class MainViewModel
         apiRequest.clear()
     }
 
-    fun getPopularMovies() {
-        apiRequest.add(api.getPopularMovies()
+    fun getPopularMovies(page: Int) {
+        apiRequest.add(api.getPopularMovies(page)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { m -> handleGetPopularMovies(m) },
                 { e -> handleNetworkError(e) }))
     }
 
-    fun getTopRatedMovies() {
-        apiRequest.add(api.getTopRatedMovies()
+    fun getTopRatedMovies(page: Int) {
+        apiRequest.add(api.getTopRatedMovies(page)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { m -> handleGetTopRatedMovies(m) },
                 { e -> handleNetworkError(e) }))
     }
 
-    fun getPopularTV() {
-        apiRequest.add(api.getPopularTV()
+    fun getPopularTV(page: Int) {
+        apiRequest.add(api.getPopularTV(page)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { m -> handleGetPopularTV(m) },
                 { e -> handleNetworkError(e) }))
     }
 
-    fun getTopRatedTV() {
-        apiRequest.add(api.getTopRatedTV()
+    fun getTopRatedTV(page: Int) {
+        apiRequest.add(api.getTopRatedTV(page)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { m -> handleGetTopRatedTV(m) },
