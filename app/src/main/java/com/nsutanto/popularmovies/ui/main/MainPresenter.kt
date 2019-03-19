@@ -7,18 +7,17 @@ class MainPresenter
     @Inject
     constructor(private val view: MainContract.View): MainContract.Presenter {
 
-    private var mainViewModel: MainViewModel? = null
+    private var viewModel: MainViewModel? = null
+
+    override fun create() {
+    }
 
     override fun start() {
-        mainViewModel = view.getViewModel()
-        mainViewModel?.getPopularMovies()
-        mainViewModel?.getTopRatedMovies()
-        mainViewModel?.getPopularTV()
-        mainViewModel?.getTopRatedTV()
+        viewModel = view.getViewModel()
     }
 
     override fun stop() {
-        mainViewModel?.clear()
+        viewModel?.clear()
     }
 
     override fun onMovieTabClicked() {
