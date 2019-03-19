@@ -10,10 +10,12 @@ import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.nsutanto.popularmovies.data.model.Movie
+import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
 import com.nsutanto.popularmovies.ui.main.tv.TVFragment
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
-import com.nsutanto.popularmovies.viewmodel.ViewModelFactory
+import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
+import org.jetbrains.anko.startActivity
 
 
 class MainActivity : BaseActivity(),
@@ -29,7 +31,7 @@ class MainActivity : BaseActivity(),
     lateinit var presenter: MainContract.Presenter
 
     @Inject
-    lateinit var factory: ViewModelFactory
+    lateinit var factory: MainViewModelFactory
 
     private var movieFragment = MovieFragment()
     private var tvFragment = TVFragment()
@@ -65,9 +67,8 @@ class MainActivity : BaseActivity(),
 
     // Movie Screen Listener
     override fun onMovieClicked(movie: Movie) {
-
+        startActivity<MovieDetailActivity>(MOVIE_INTENT to movie)
     }
-
 
     // Private Methods
     private fun setupContent(newContent: Fragment, navItem: NavBar) {
@@ -102,5 +103,9 @@ class MainActivity : BaseActivity(),
         if (noOfColumns < 2)
             noOfColumns = 2
         return noOfColumns
+    }
+
+    companion object {
+        const val MOVIE_INTENT = ".movie"
     }
 }
