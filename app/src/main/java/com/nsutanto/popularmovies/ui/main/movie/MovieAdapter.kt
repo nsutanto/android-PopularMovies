@@ -10,12 +10,13 @@ import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.utils.AppConstants
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.movie_item.view.*
+import kotlinx.android.synthetic.main.horizontal_item.view.*
 
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter
+    constructor(private val movieListener: MovieFragment.IMovieListener) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    private var movies = listOf<Movie>()
+    private var movies = mutableListOf<Movie>()
 
     inner class MovieViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         val posterView: ImageView = v.iv_poster
@@ -26,13 +27,13 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         }
 
         override fun onClick(v: View) {
-            //mTaskListener.StartDetailActivity(movies.get(adapterPosition))
+            movieListener.onMovieClicked(movies.get(adapterPosition))
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MovieViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.horizontal_item, parent, false)
         return MovieViewHolder(view)
     }
 
@@ -42,7 +43,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         val posterPath = movie.posterPath
         if (posterPath != "") {
             Picasso.get()
-                .load(AppConstants.BASE_URL_POSTER + posterPath)
+                .load(AppConstants.BASE_URL_POSTER_MEDIUM + posterPath)
                 .into(holder.posterView)
         }
         holder.title.text = movie.title
@@ -52,7 +53,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     fun setMovies(movies: List<Movie>?) {
         movies?.let {
-            this.movies = movies
+            this.movies.addAll(movies)
             notifyDataSetChanged()
         }
     }
