@@ -13,7 +13,7 @@ import com.nsutanto.popularmovies.data.model.TVResponse
 import com.nsutanto.popularmovies.ui.base.view.BaseFragment
 import com.nsutanto.popularmovies.utils.AppConstants.INVALID_ACTIVITY
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
-import com.nsutanto.popularmovies.viewmodel.ViewModelFactory
+import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.fragment_tv.*
 import javax.inject.Inject
 
@@ -23,17 +23,24 @@ class TVFragment : BaseFragment(), TVContract.View {
     lateinit var presenter: TVPresenter
 
     @Inject
-    lateinit var factory: ViewModelFactory
+    lateinit var factory: MainViewModelFactory
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var popularTVAdapter: TVAdapter
     private lateinit var topRatedTVAdapter: TVAdapter
 
+    override fun getViewModel(): MainViewModel {
+        return activity?.run {
+            ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
+        } ?: throw Exception(INVALID_ACTIVITY)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setViewModel()
         createAdapters()
+
+        presenter.create()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -71,9 +78,29 @@ class TVFragment : BaseFragment(), TVContract.View {
         rv_popular_tv.adapter = popularTVAdapter
         rv_popular_tv.layoutManager = vmPopularTV
 
+        rv_popular_tv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollHorizontally(1)) {
+                    presenter.fetchPopularTV()
+                }
+            }
+        })
+
         val vmTopRatedTV = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         rv_top_rated_tv.adapter = topRatedTVAdapter
         rv_top_rated_tv.layoutManager = vmTopRatedTV
+
+        rv_top_rated_tv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollHorizontally(1)) {
+                    presenter.fetchTopRatedTV()
+                }
+            }
+        })
     }
 
     private fun createAdapters() {
@@ -82,9 +109,7 @@ class TVFragment : BaseFragment(), TVContract.View {
     }
 
     private fun setViewModel() {
-        mainViewModel = activity?.run {
-            ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
-        } ?: throw Exception(INVALID_ACTIVITY)
+        mainViewModel = getViewModel()
 
         mainViewModel.popularTV.observe(this, Observer<TVResponse> {
                 tvs -> presenter.onUpdatedPopularTV(tvs)
