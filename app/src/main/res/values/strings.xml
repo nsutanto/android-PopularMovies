@@ -18,8 +18,13 @@
     <string name="videos">Videos</string>
 
     <string name="dummy_title">Title</string>
+    <string name="dummy_year">2019</string>
+    <string name="dummy_rating">7.3</string>
     <string name="popular_movie">Popular Movie</string>
     <string name="top_rated_movie">Top Rated Movie</string>
     <string name="trending_movie">Trending Movie</string>
+    <string name="popular_tv">Popular TV</string>
+    <string name="top_rated_tv">Top Rated TV</string>
     <string name="overview">Overview</string>
+    <string name="see_all">See All</string>
 </resources>
