@@ -16,10 +16,6 @@ import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
 import com.nsutanto.popularmovies.data.model.*
-import com.google.android.material.appbar.AppBarLayout
-
-
-
 
 class MovieDetailActivity : BaseActivity(),
                             VideoAdapter.IMovieDetailListener,
@@ -67,6 +63,9 @@ class MovieDetailActivity : BaseActivity(),
             .into(iv_poster)
 
         collapse_toolbar_layout.title = movie.title
+
+        tv_release_date.text = movie.releaseDate
+        tv_rating.text = movie.voteAverage
     }
 
     override fun showVideos(videosResponse: MovieVideosResponse) {
