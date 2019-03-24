@@ -10,10 +10,11 @@ import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.TV
 import com.nsutanto.popularmovies.utils.AppConstants
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.horizontal_item.view.*
+import kotlinx.android.synthetic.main.item.view.*
 
 
-class TVAdapter : RecyclerView.Adapter<TVAdapter.MovieViewHolder>() {
+class TVAdapter
+    constructor(private val tvListener: TVFragment.ITVListener): RecyclerView.Adapter<TVAdapter.MovieViewHolder>() {
 
     private var tvs = mutableListOf<TV>()
 
@@ -26,13 +27,13 @@ class TVAdapter : RecyclerView.Adapter<TVAdapter.MovieViewHolder>() {
         }
 
         override fun onClick(v: View) {
-            //mTaskListener.StartDetailActivity(tvs.get(adapterPosition))
+            tvListener.onTVClicked(tvs[adapterPosition])
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MovieViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.horizontal_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return MovieViewHolder(view)
     }
 
