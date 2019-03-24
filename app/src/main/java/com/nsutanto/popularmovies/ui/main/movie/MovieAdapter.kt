@@ -10,7 +10,7 @@ import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.utils.AppConstants
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.horizontal_item.view.*
+import kotlinx.android.synthetic.main.item.view.*
 
 
 class MovieAdapter
@@ -27,13 +27,13 @@ class MovieAdapter
         }
 
         override fun onClick(v: View) {
-            movieListener.onMovieClicked(movies.get(adapterPosition))
+            movieListener.onMovieClicked(movies[adapterPosition])
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MovieViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.horizontal_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return MovieViewHolder(view)
     }
 
