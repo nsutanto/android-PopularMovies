@@ -10,7 +10,7 @@ import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Cast
 import com.nsutanto.popularmovies.utils.AppConstants
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.horizontal_item.view.*
+import kotlinx.android.synthetic.main.item.view.*
 
 class CastAdapter
     constructor(private val castListener: ICastListener) : RecyclerView.Adapter<CastAdapter.CreditViewHolder>() {
@@ -36,7 +36,7 @@ class CastAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): CreditViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.horizontal_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return CreditViewHolder(view)
     }
 
