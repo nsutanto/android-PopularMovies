@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Video
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.horizontal_item.view.*
+import kotlinx.android.synthetic.main.item.view.*
 
 class VideoAdapter
     constructor(private val videoListener: IMovieDetailListener) : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
@@ -35,7 +35,7 @@ class VideoAdapter
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): VideoViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.horizontal_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return VideoViewHolder(view)
     }
 
