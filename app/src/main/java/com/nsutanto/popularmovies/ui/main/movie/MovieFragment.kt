@@ -16,8 +16,8 @@ import com.nsutanto.popularmovies.ui.base.view.BaseFragment
 import com.nsutanto.popularmovies.utils.AppConstants.INVALID_ACTIVITY
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
-import kotlinx.android.synthetic.main.fragment_movie.*
-import timber.log.Timber
+import kotlinx.android.synthetic.main.layout_popular_movie_list.*
+import kotlinx.android.synthetic.main.layout_top_rated_movie_list.*
 import javax.inject.Inject
 
 
@@ -25,6 +25,7 @@ class MovieFragment : BaseFragment(), MovieContract.View {
 
     interface IMovieListener {
         fun onMovieClicked(movie: Movie)
+        fun onAllPopularMovieClicked()
     }
 
     @Inject
@@ -39,9 +40,6 @@ class MovieFragment : BaseFragment(), MovieContract.View {
 
     private lateinit var movieListener: IMovieListener
 
-    private var popularMoviePos: Int = 0
-    private var topRatedPos: Int = 0
-
     override fun getViewModel(): MainViewModel {
        return activity?.run {
            ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
@@ -53,7 +51,6 @@ class MovieFragment : BaseFragment(), MovieContract.View {
         setViewModel()
         createAdapters()
 
-        Timber.d("NICK : onStart")
         presenter.create()
     }
 
@@ -65,6 +62,9 @@ class MovieFragment : BaseFragment(), MovieContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
+
+        // button all clicked
+        btn_all_popular_movie.setOnClickListener {  }
     }
 
     override fun onAttach(context: Context) {
@@ -75,36 +75,11 @@ class MovieFragment : BaseFragment(), MovieContract.View {
     override fun onStart() {
         super.onStart()
         presenter.start()
-
-        rv_popular_movie.scrollToPosition(popularMoviePos)
-        rv_top_rated_movie.scrollToPosition(topRatedPos)
-    }
+  }
 
     override fun onStop() {
         super.onStop()
         presenter.stop()
-
-        Timber.d("NICK : onStop")
-        //popularMoviePos = rv_popular_movie.positio
-        //topRatedPos = rv_top_rated_movie.scrollX
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("RV_POPULAR_MOVIE_POSITION", rv_popular_movie.scrollX)
-        outState.putInt("RV_TOP_RATED_MOVIE_POSITION", rv_top_rated_movie.scrollX)
-
-        Timber.d("NICK : Save Instance State : Scroll X = " + rv_popular_movie.scrollX)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        val popularMoviePosition = savedInstanceState?.getInt("RV_POPULAR_MOVIE_POSITION")
-        val topRatedMoviePosition = savedInstanceState?.getInt("RV_POPULAR_MOVIE_POSITION")
-
-        Timber.d("NICK : Restore Instance State : Scroll X = " + popularMoviePosition)
-        popularMoviePosition?.let { rv_popular_movie.scrollToPosition(popularMoviePosition) }
-        topRatedMoviePosition?.let {  rv_top_rated_movie.scrollToPosition(topRatedMoviePosition) }
     }
 
     override fun showPopularMovies(movieResponse: MovieResponse) {
