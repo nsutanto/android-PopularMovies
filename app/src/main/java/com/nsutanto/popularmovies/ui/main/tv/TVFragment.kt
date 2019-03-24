@@ -1,5 +1,6 @@
 package com.nsutanto.popularmovies.ui.main.tv
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +10,21 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
+import com.nsutanto.popularmovies.data.model.TV
 import com.nsutanto.popularmovies.data.model.TVResponse
 import com.nsutanto.popularmovies.ui.base.view.BaseFragment
 import com.nsutanto.popularmovies.utils.AppConstants.INVALID_ACTIVITY
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
-import kotlinx.android.synthetic.main.fragment_tv.*
+import kotlinx.android.synthetic.main.layout_popular_tv_list.*
+import kotlinx.android.synthetic.main.layout_top_rated_tv_list.*
 import javax.inject.Inject
 
 class TVFragment : BaseFragment(), TVContract.View {
+
+    interface ITVListener {
+        fun onTVClicked(tv: TV)
+    }
 
     @Inject
     lateinit var presenter: TVPresenter
@@ -28,6 +35,8 @@ class TVFragment : BaseFragment(), TVContract.View {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var popularTVAdapter: TVAdapter
     private lateinit var topRatedTVAdapter: TVAdapter
+
+    private lateinit var tvListener: ITVListener
 
     override fun getViewModel(): MainViewModel {
         return activity?.run {
@@ -51,6 +60,11 @@ class TVFragment : BaseFragment(), TVContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        tvListener = context as ITVListener
     }
 
     override fun onStart() {
@@ -104,8 +118,8 @@ class TVFragment : BaseFragment(), TVContract.View {
     }
 
     private fun createAdapters() {
-        popularTVAdapter = TVAdapter()
-        topRatedTVAdapter = TVAdapter()
+        popularTVAdapter = TVAdapter(tvListener)
+        topRatedTVAdapter = TVAdapter(tvListener)
     }
 
     private fun setViewModel() {
