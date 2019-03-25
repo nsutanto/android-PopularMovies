@@ -5,11 +5,10 @@ import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.ui.base.view.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-import android.content.Context
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.nsutanto.popularmovies.data.model.Movie
+import com.nsutanto.popularmovies.data.model.TV
 import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
 import com.nsutanto.popularmovies.ui.main.tv.TVFragment
@@ -20,7 +19,8 @@ import org.jetbrains.anko.startActivity
 
 class MainActivity : BaseActivity(),
                     MainContract.View,
-                    MovieFragment.IMovieListener {
+                    MovieFragment.IMovieListener,
+                    TVFragment.ITVListener {
 
     private enum class NavBar(val value: Int) {
         MOVIE(0),
@@ -40,6 +40,9 @@ class MainActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Set View Pager
+        setupViewPager()
+
         // display movie fragment by default
         displayMovieScreen()
 
@@ -57,12 +60,13 @@ class MainActivity : BaseActivity(),
         return ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
     }
 
+    // Tab
     override fun displayMovieScreen() {
-        setupContent(movieFragment, NavBar.MOVIE)
+        view_pager.currentItem = NavBar.MOVIE.value
     }
 
     override fun displayTVScreen() {
-        setupContent(tvFragment, NavBar.TV)
+        view_pager.currentItem = NavBar.TV.value
     }
 
     // Movie Screen Listener
@@ -70,17 +74,21 @@ class MainActivity : BaseActivity(),
         startActivity<MovieDetailActivity>(MOVIE_INTENT to movie)
     }
 
-    // Private Methods
-    private fun setupContent(newContent: Fragment, navItem: NavBar) {
-        nav_bar.menu.getItem(navItem.value).isChecked = true
+    // TV Screen Listener
+    override fun onTVClicked(tv: TV) {
+        startActivity<MovieDetailActivity>(MOVIE_INTENT to tv)
+    }
 
-        val current = supportFragmentManager.findFragmentById(R.id.content_frame)
-        if (current != newContent) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.content_frame, newContent)
-                .addToBackStack(navItem.name)
-                .commit()
-        }
+    // On button clicked
+    override fun displayAllPopularMovie() {
+
+    }
+
+    private fun setupViewPager() {
+        val adapter = ViewPagerAdapter(supportFragmentManager)
+        adapter.addFragment(movieFragment)
+        adapter.addFragment(tvFragment)
+        view_pager.adapter = adapter
     }
 
     private fun navigationItemSelectedListener(item: MenuItem): Boolean {
@@ -89,20 +97,6 @@ class MainActivity : BaseActivity(),
             R.id.nav_tv -> presenter.onTVTabClicked()
         }
         return true
-    }
-
-    private fun getCurrentFragment() : Fragment? {
-        return supportFragmentManager.findFragmentById(R.id.content_frame)
-    }
-
-    private fun calculateNoOfColumns(context: Context): Int {
-        val displayMetrics = context.resources.displayMetrics
-        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
-        val scalingFactor = 200
-        var noOfColumns = (dpWidth / scalingFactor).toInt()
-        if (noOfColumns < 2)
-            noOfColumns = 2
-        return noOfColumns
     }
 
     companion object {
