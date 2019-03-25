@@ -1,5 +1,7 @@
 package com.nsutanto.popularmovies.di.builder
 
+import com.nsutanto.popularmovies.ui.all_item.AllItemActivity
+import com.nsutanto.popularmovies.ui.all_item.AllItemActivityModule
 import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
 import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivityModule
 import com.nsutanto.popularmovies.ui.main.MainActivity
@@ -35,5 +37,11 @@ interface ActivityBuilder {
         MovieDetailActivityModule::class
     ])
     fun detailMovieActivity(): MovieDetailActivity
+
+    @ContributesAndroidInjector(modules =
+    [
+        AllItemActivityModule::class
+    ])
+    fun allItemActivity(): AllItemActivity
 }
 
