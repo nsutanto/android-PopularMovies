@@ -20,8 +20,6 @@ class MoviePresenter @Inject
     }
 
     override fun start() {
-        //popularMovies?.let { view.showPopularMovies(popularMovies!!) }
-        //topRatedMovies?.let { view.showTopRatedMovies(topRatedMovies!!) }
     }
 
     override fun stop() {
