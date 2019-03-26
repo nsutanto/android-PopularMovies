@@ -10,10 +10,11 @@ class MainPresenter
     private var viewModel: MainViewModel? = null
 
     override fun create() {
+        viewModel = view.getViewModel()
     }
 
     override fun start() {
-        viewModel = view.getViewModel()
+
     }
 
     override fun stop() {
@@ -26,5 +27,9 @@ class MainPresenter
 
     override fun onTVTabClicked() {
         view.displayTVScreen()
+    }
+
+    override fun onAllPopularMovieClicked() {
+        view.displayAllPopularMovie()
     }
 }
