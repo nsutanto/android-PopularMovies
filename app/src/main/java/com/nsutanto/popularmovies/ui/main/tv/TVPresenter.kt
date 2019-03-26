@@ -20,8 +20,7 @@ class TVPresenter @Inject
     }
 
     override fun start() {
-        //popularTV?.let { view.showPopularTV(popularTV!!)}
-        //topRatedTV?.let { view.showTopRatedTV(topRatedTV!!)}
+
     }
 
     override fun stop() {
