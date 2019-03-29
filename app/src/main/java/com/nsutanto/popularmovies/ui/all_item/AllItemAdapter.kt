@@ -10,11 +10,15 @@ import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.utils.AppConstants
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item.view.*
+import kotlinx.android.synthetic.main.item_horizontal.view.*
 
 
 class AllItemAdapter
-constructor() : RecyclerView.Adapter<AllItemAdapter.ItemViewHolder>() {
+constructor(private val allItemListener: IAllItemListener) : RecyclerView.Adapter<AllItemAdapter.ItemViewHolder>() {
+
+    interface IAllItemListener {
+        fun onMovieClicked(movie: Movie)
+    }
 
     private data class ItemData(val path: String, val title: String)
 
@@ -29,13 +33,13 @@ constructor() : RecyclerView.Adapter<AllItemAdapter.ItemViewHolder>() {
         }
 
         override fun onClick(v: View) {
-            //castListener.onCastClicked(casts[adapterPosition])
+            allItemListener.onMovieClicked(objects[adapterPosition] as Movie)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_all, parent, false)
         return ItemViewHolder(view)
     }
 
