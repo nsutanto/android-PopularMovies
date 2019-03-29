@@ -25,7 +25,7 @@ class MovieFragment : BaseFragment(), MovieContract.View {
 
     interface IMovieListener {
         fun onMovieClicked(movie: Movie)
-        fun onAllPopularMovieClicked()
+        fun onAllPopularMovieClicked(movies: List<Movie>)
     }
 
     @Inject
@@ -64,7 +64,7 @@ class MovieFragment : BaseFragment(), MovieContract.View {
         setRecyclerView()
 
         // button all clicked
-        btn_all_popular_movie.setOnClickListener {  }
+        btn_all_popular_movie.setOnClickListener { presenter.onAllPopularMovieClicked() }
     }
 
     override fun onAttach(context: Context) {
@@ -90,6 +90,10 @@ class MovieFragment : BaseFragment(), MovieContract.View {
     override fun showTopRatedMovies(movieResponse: MovieResponse) {
         topRatedMoviesAdapter.setMovies(movieResponse.results)
         pb_top_rated_movie.visibility = View.GONE
+    }
+
+    override fun showAllPopularMovies(movies: List<Movie>) {
+        movieListener.onAllPopularMovieClicked(movies)
     }
 
     private fun setRecyclerView() {

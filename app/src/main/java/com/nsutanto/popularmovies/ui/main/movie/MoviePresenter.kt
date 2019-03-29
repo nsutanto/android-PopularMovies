@@ -1,5 +1,6 @@
 package com.nsutanto.popularmovies.ui.main.movie
 
+import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.data.model.MovieResponse
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import javax.inject.Inject
@@ -12,6 +13,8 @@ class MoviePresenter @Inject
     private var viewModel: MainViewModel? = null
     private var popularMoviesPage = 1
     private var topRatedMoviesPage = 1
+
+    private var popularMovieList = mutableListOf<Movie>()
 
     override fun create() {
         viewModel = view.getViewModel()
@@ -28,6 +31,7 @@ class MoviePresenter @Inject
 
     override fun onUpdatedPopularMovies(movieResponse: MovieResponse) {
         popularMovies = movieResponse
+        movieResponse.results?.let { popularMovieList.addAll(movieResponse.results) }
         popularMovies?.let { view.showPopularMovies(popularMovies!!)}
     }
 
@@ -44,5 +48,9 @@ class MoviePresenter @Inject
     override fun fetchTopRatedMovies() {
         viewModel?.getTopRatedMovies(topRatedMoviesPage)
         topRatedMoviesPage++
+    }
+
+    override fun onAllPopularMovieClicked() {
+        view.showAllPopularMovies(popularMovieList)
     }
 }
