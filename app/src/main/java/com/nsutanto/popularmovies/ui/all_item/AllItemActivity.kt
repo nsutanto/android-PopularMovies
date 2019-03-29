@@ -4,11 +4,19 @@ import android.content.Context
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.nsutanto.popularmovies.R
+import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.ui.base.view.BaseActivity
+import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
+import com.nsutanto.popularmovies.utils.AppConstants
+import com.nsutanto.popularmovies.utils.AppConstants.POPULAR_MOVIE_LIST_INTENT
 import kotlinx.android.synthetic.main.activity_all.*
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
-class AllItemActivity : BaseActivity(), AllItemContract.View {
+
+class AllItemActivity : BaseActivity(),
+                        AllItemContract.View,
+                        AllItemAdapter.IAllItemListener {
 
     @Inject
     lateinit var presenter: AllItemContract.Presenter
@@ -19,14 +27,21 @@ class AllItemActivity : BaseActivity(), AllItemContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all)
 
+        val items = intent.getSerializableExtra(POPULAR_MOVIE_LIST_INTENT) as List<Movie>
+
         createAdapters()
         setRecyclerView()
+        allItemAdapter.setItems(items)
     }
 
     // View Methods
     override fun onStart() {
         super.onStart()
         presenter.start()
+    }
+
+    override fun onMovieClicked(movie: Movie) {
+        startActivity<MovieDetailActivity>(AppConstants.MOVIE_INTENT to movie)
     }
 
     private fun calculateNoOfColumns(context: Context): Int {
@@ -48,6 +63,6 @@ class AllItemActivity : BaseActivity(), AllItemContract.View {
     }
 
     private fun createAdapters() {
-        allItemAdapter = AllItemAdapter()
+        allItemAdapter = AllItemAdapter(this)
     }
 }
