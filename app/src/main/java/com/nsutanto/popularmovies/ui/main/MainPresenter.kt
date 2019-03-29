@@ -28,8 +28,4 @@ class MainPresenter
     override fun onTVTabClicked() {
         view.displayTVScreen()
     }
-
-    override fun onAllPopularMovieClicked() {
-        view.displayAllPopularMovie()
-    }
 }

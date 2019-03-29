@@ -9,8 +9,6 @@ interface MainContract {
 
         fun displayTVScreen()
 
-        fun displayAllPopularMovie()
-
         fun getViewModel(): MainViewModel
     }
 
@@ -18,8 +16,6 @@ interface MainContract {
         fun onMovieTabClicked()
 
         fun onTVTabClicked()
-
-        fun onAllPopularMovieClicked()
     }
 }
 

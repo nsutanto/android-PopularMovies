@@ -9,9 +9,12 @@ import android.view.MenuItem
 import androidx.lifecycle.ViewModelProviders
 import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.data.model.TV
+import com.nsutanto.popularmovies.ui.all_item.AllItemActivity
 import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
 import com.nsutanto.popularmovies.ui.main.tv.TVFragment
+import com.nsutanto.popularmovies.utils.AppConstants.MOVIE_INTENT
+import com.nsutanto.popularmovies.utils.AppConstants.POPULAR_MOVIE_LIST_INTENT
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
 import org.jetbrains.anko.startActivity
@@ -79,9 +82,8 @@ class MainActivity : BaseActivity(),
         startActivity<MovieDetailActivity>(MOVIE_INTENT to tv)
     }
 
-    // On button clicked
-    override fun displayAllPopularMovie() {
-
+    override fun onAllPopularMovieClicked(movies: List<Movie>) {
+        startActivity<AllItemActivity>(POPULAR_MOVIE_LIST_INTENT to movies)
     }
 
     private fun setupViewPager() {
@@ -97,9 +99,5 @@ class MainActivity : BaseActivity(),
             R.id.nav_tv -> presenter.onTVTabClicked()
         }
         return true
-    }
-
-    companion object {
-        const val MOVIE_INTENT = ".movie"
     }
 }
