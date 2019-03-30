@@ -25,15 +25,18 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="FontHeader">
-        <item name="android:textSize">24sp</item>
+    <style name="FontTheme">
         <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+
+    <style name="FontTheme.Header">
+        <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="FontContent">
+    <style name="FontTheme.Content">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textStyle">bold</item>
     </style>
 
