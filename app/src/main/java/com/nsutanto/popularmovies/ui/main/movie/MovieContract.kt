@@ -15,6 +15,8 @@ class MovieContract {
 
         fun showAllPopularMovies(movies: List<Movie>)
 
+        fun showAllTopRatedMovies(movies: List<Movie>)
+
         fun getViewModel(): MainViewModel
     }
 
@@ -25,6 +27,8 @@ class MovieContract {
         fun onUpdatedTopRatedMovies(movieResponse: MovieResponse)
 
         fun onAllPopularMovieClicked()
+
+        fun onAllTopRatedMovieClicked()
 
         fun fetchPopularMovies()
 
