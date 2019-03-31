@@ -2,13 +2,20 @@ package com.nsutanto.popularmovies.ui.all_item
 
 import android.content.Context
 import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
+import com.nsutanto.popularmovies.data.model.MovieResponse
 import com.nsutanto.popularmovies.ui.base.view.BaseActivity
 import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
 import com.nsutanto.popularmovies.utils.AppConstants
-import com.nsutanto.popularmovies.utils.AppConstants.POPULAR_MOVIE_LIST_INTENT
+import com.nsutanto.popularmovies.utils.AppConstants.ALL_ITEM_TYPE_INTENT
+import com.nsutanto.popularmovies.utils.AppConstants.MOVIE_LIST_INTENT
+import com.nsutanto.popularmovies.viewmodel.MainViewModel
+import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.activity_all.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -21,17 +28,29 @@ class AllItemActivity : BaseActivity(),
     @Inject
     lateinit var presenter: AllItemContract.Presenter
 
+    @Inject
+    lateinit var factory: MainViewModelFactory
+
     private lateinit var allItemAdapter: AllItemAdapter
+
+    private lateinit var itemType: AppConstants.AllItemType
+
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all)
 
-        val items = intent.getSerializableExtra(POPULAR_MOVIE_LIST_INTENT) as List<Movie>
+        val items = intent.getSerializableExtra(MOVIE_LIST_INTENT) as List<Movie>
+        itemType = intent.getSerializableExtra(ALL_ITEM_TYPE_INTENT) as AppConstants.AllItemType
 
         createAdapters()
         setRecyclerView()
-        allItemAdapter.setItems(items)
+        setViewModel()
+
+        setItems(items)
+
+        presenter.create()
     }
 
     // View Methods
@@ -40,8 +59,16 @@ class AllItemActivity : BaseActivity(),
         presenter.start()
     }
 
+    override fun getViewModel(): MainViewModel {
+        return ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
+    }
+
     override fun onMovieClicked(movie: Movie) {
         startActivity<MovieDetailActivity>(AppConstants.MOVIE_INTENT to movie)
+    }
+
+    override fun setItems(objects: List<Any>?) {
+        allItemAdapter.setItems(objects)
     }
 
     private fun calculateNoOfColumns(context: Context): Int {
@@ -60,9 +87,35 @@ class AllItemActivity : BaseActivity(),
         val layoutManager = GridLayoutManager(this, numColumn)
         rv_all_items.adapter = allItemAdapter
         rv_all_items.layoutManager = layoutManager
+
+        rv_all_items.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    when (itemType) {
+                        AppConstants.AllItemType.POPULAR_MOVIE -> presenter.fetchPopularMovies()
+                        AppConstants.AllItemType.TOP_RATED_MOVIE -> presenter.fetchTopRatedMovies()
+                    }
+                    //presenter.fetchPopularMovies()
+                }
+            }
+        })
     }
 
     private fun createAdapters() {
         allItemAdapter = AllItemAdapter(this)
+    }
+
+    private fun setViewModel() {
+        mainViewModel = getViewModel()
+
+        mainViewModel.popularMovies.observe(this, Observer<MovieResponse> {
+                movies -> presenter.onUpdatedPopularMovies(movies)
+        })
+
+        mainViewModel.topRatedMovies.observe(this, Observer<MovieResponse> {
+                movies -> presenter.onUpdatedTopRatedMovies(movies)
+        })
     }
 }
