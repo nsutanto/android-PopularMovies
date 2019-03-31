@@ -18,36 +18,41 @@ class MainViewModel
     val popularTV = MutableLiveData<TVResponse>()
     val topRatedTV = MutableLiveData<TVResponse>()
 
+    private var popularMoviePage = 1
+    private var topRatedMoviePage = 1
+    private var popularTVPage = 1
+    private var topRatedTvPage = 1
+
     fun clear() {
         apiRequest.clear()
     }
 
-    fun getPopularMovies(page: Int) {
-        apiRequest.add(api.getPopularMovies(page)
+    fun getPopularMovies() {
+        apiRequest.add(api.getPopularMovies(popularMoviePage++)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { m -> handleGetPopularMovies(m) },
                 { e -> handleNetworkError(e) }))
     }
 
-    fun getTopRatedMovies(page: Int) {
-        apiRequest.add(api.getTopRatedMovies(page)
+    fun getTopRatedMovies() {
+        apiRequest.add(api.getTopRatedMovies(topRatedMoviePage++)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { m -> handleGetTopRatedMovies(m) },
                 { e -> handleNetworkError(e) }))
     }
 
-    fun getPopularTV(page: Int) {
-        apiRequest.add(api.getPopularTV(page)
+    fun getPopularTV() {
+        apiRequest.add(api.getPopularTV(popularTVPage++)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { m -> handleGetPopularTV(m) },
                 { e -> handleNetworkError(e) }))
     }
 
-    fun getTopRatedTV(page: Int) {
-        apiRequest.add(api.getTopRatedTV(page)
+    fun getTopRatedTV() {
+        apiRequest.add(api.getTopRatedTV(topRatedTvPage++)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { m -> handleGetTopRatedTV(m) },
