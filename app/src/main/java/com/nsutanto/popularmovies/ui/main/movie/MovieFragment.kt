@@ -16,8 +16,11 @@ import com.nsutanto.popularmovies.ui.base.view.BaseFragment
 import com.nsutanto.popularmovies.utils.AppConstants.INVALID_ACTIVITY
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
+import kotlinx.android.synthetic.main.fragment_movie.*
 import kotlinx.android.synthetic.main.layout_popular_movie_list.*
+import kotlinx.android.synthetic.main.layout_popular_movie_list.view.*
 import kotlinx.android.synthetic.main.layout_top_rated_movie_list.*
+import kotlinx.android.synthetic.main.layout_top_rated_movie_list.view.*
 import javax.inject.Inject
 
 
@@ -26,6 +29,7 @@ class MovieFragment : BaseFragment(), MovieContract.View {
     interface IMovieListener {
         fun onMovieClicked(movie: Movie)
         fun onAllPopularMovieClicked(movies: List<Movie>)
+        fun onAllTopRatedMovieClicked(movies: List<Movie>)
     }
 
     @Inject
@@ -64,7 +68,8 @@ class MovieFragment : BaseFragment(), MovieContract.View {
         setRecyclerView()
 
         // button all clicked
-        btn_all_popular_movie.setOnClickListener { presenter.onAllPopularMovieClicked() }
+        layout_popular_movie.btn_all_popular_movie.setOnClickListener { presenter.onAllPopularMovieClicked() }
+        layout_top_rated_movie.btn_all_top_rated_movie.setOnClickListener { presenter.onAllTopRatedMovieClicked() }
     }
 
     override fun onAttach(context: Context) {
@@ -94,6 +99,10 @@ class MovieFragment : BaseFragment(), MovieContract.View {
 
     override fun showAllPopularMovies(movies: List<Movie>) {
         movieListener.onAllPopularMovieClicked(movies)
+    }
+
+    override fun showAllTopRatedMovies(movies: List<Movie>) {
+        movieListener.onAllTopRatedMovieClicked(movies)
     }
 
     private fun setRecyclerView() {
