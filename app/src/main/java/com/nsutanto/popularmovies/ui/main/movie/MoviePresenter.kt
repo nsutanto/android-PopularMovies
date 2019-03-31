@@ -11,10 +11,9 @@ class MoviePresenter @Inject
     private var popularMovies: MovieResponse? = null
     private var topRatedMovies: MovieResponse? = null
     private var viewModel: MainViewModel? = null
-    private var popularMoviesPage = 1
-    private var topRatedMoviesPage = 1
 
     private var popularMovieList = mutableListOf<Movie>()
+    private var topRatedMovieList = mutableListOf<Movie>()
 
     override fun create() {
         viewModel = view.getViewModel()
@@ -37,20 +36,23 @@ class MoviePresenter @Inject
 
     override fun onUpdatedTopRatedMovies(movieResponse: MovieResponse) {
         topRatedMovies = movieResponse
+        movieResponse.results?.let { topRatedMovieList.addAll(movieResponse.results)}
         topRatedMovies?.let { view.showTopRatedMovies(topRatedMovies!!)}
     }
 
     override fun fetchPopularMovies() {
-        viewModel?.getPopularMovies(popularMoviesPage)
-        popularMoviesPage++
+        viewModel?.getPopularMovies()
     }
 
     override fun fetchTopRatedMovies() {
-        viewModel?.getTopRatedMovies(topRatedMoviesPage)
-        topRatedMoviesPage++
+        viewModel?.getTopRatedMovies()
     }
 
     override fun onAllPopularMovieClicked() {
         view.showAllPopularMovies(popularMovieList)
+    }
+
+    override fun onAllTopRatedMovieClicked() {
+        view.showAllTopRatedMovies(topRatedMovieList)
     }
 }
