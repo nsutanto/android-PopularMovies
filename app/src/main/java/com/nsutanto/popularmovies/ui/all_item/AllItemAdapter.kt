@@ -22,7 +22,7 @@ constructor(private val allItemListener: IAllItemListener) : RecyclerView.Adapte
 
     private data class ItemData(val path: String, val title: String)
 
-    private var objects = listOf<Any>()
+    private var objects = mutableListOf<Any>()
 
     inner class ItemViewHolder(v: View) : RecyclerView.ViewHolder(v), View.OnClickListener {
         val posterView: ImageView = v.iv_poster
@@ -68,7 +68,7 @@ constructor(private val allItemListener: IAllItemListener) : RecyclerView.Adapte
 
     fun setItems(objects: List<Any>?) {
         objects?.let {
-            this.objects = objects
+            this.objects.addAll(objects)
             notifyDataSetChanged()
         }
     }
