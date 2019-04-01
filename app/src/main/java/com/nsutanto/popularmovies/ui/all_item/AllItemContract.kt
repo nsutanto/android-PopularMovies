@@ -1,6 +1,7 @@
 package com.nsutanto.popularmovies.ui.all_item
 
 import com.nsutanto.popularmovies.data.model.MovieResponse
+import com.nsutanto.popularmovies.data.model.TVResponse
 import com.nsutanto.popularmovies.ui.base.presenter.BasePresenter
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 
@@ -18,8 +19,18 @@ interface AllItemContract {
 
         fun onUpdatedTopRatedMovies(movieResponse: MovieResponse)
 
+        fun onUpdatedPopularTV(tvResponse: TVResponse)
+
+        fun onUpdatedTopRatedTV(tvResponse: TVResponse)
+
         fun fetchPopularMovies()
 
         fun fetchTopRatedMovies()
+
+        fun fetchPopularTV()
+
+        fun fetchTopRatedTV()
+
+        fun fetchData()
     }
 }
