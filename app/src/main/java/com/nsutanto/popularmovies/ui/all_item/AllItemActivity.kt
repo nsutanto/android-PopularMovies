@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.data.model.MovieResponse
+import com.nsutanto.popularmovies.data.model.TVResponse
 import com.nsutanto.popularmovies.ui.base.view.BaseActivity
 import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
 import com.nsutanto.popularmovies.utils.AppConstants
-import com.nsutanto.popularmovies.utils.AppConstants.ALL_ITEM_TYPE_INTENT
-import com.nsutanto.popularmovies.utils.AppConstants.MOVIE_LIST_INTENT
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
 import kotlinx.android.synthetic.main.activity_all.*
@@ -41,15 +40,9 @@ class AllItemActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all)
 
-        val items = intent.getSerializableExtra(MOVIE_LIST_INTENT) as List<Movie>
-        itemType = intent.getSerializableExtra(ALL_ITEM_TYPE_INTENT) as AppConstants.AllItemType
-
         createAdapters()
         setRecyclerView()
         setViewModel()
-
-        setItems(items)
-
         presenter.create()
     }
 
@@ -93,11 +86,7 @@ class AllItemActivity : BaseActivity(),
                 super.onScrollStateChanged(recyclerView, newState)
 
                 if (!recyclerView.canScrollVertically(1)) {
-                    when (itemType) {
-                        AppConstants.AllItemType.POPULAR_MOVIE -> presenter.fetchPopularMovies()
-                        AppConstants.AllItemType.TOP_RATED_MOVIE -> presenter.fetchTopRatedMovies()
-                    }
-                    //presenter.fetchPopularMovies()
+                    presenter.fetchData()
                 }
             }
         })
@@ -116,6 +105,14 @@ class AllItemActivity : BaseActivity(),
 
         mainViewModel.topRatedMovies.observe(this, Observer<MovieResponse> {
                 movies -> presenter.onUpdatedTopRatedMovies(movies)
+        })
+
+        mainViewModel.popularTV.observe(this, Observer<TVResponse> {
+                tvs -> presenter.onUpdatedPopularTV(tvs)
+        })
+
+        mainViewModel.topRatedTV.observe(this, Observer<TVResponse> {
+                tvs -> presenter.onUpdatedTopRatedTV(tvs)
         })
     }
 }
