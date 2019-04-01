@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
+import com.nsutanto.popularmovies.data.model.TV
 import com.nsutanto.popularmovies.utils.AppConstants
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_horizontal.view.*
@@ -50,7 +51,7 @@ constructor(private val allItemListener: IAllItemListener) : RecyclerView.Adapte
         val profilePath = itemData?.path
         if (profilePath != "") {
             Picasso.get()
-                .load(AppConstants.BASE_URL_POSTER + profilePath)
+                .load(AppConstants.BASE_URL_POSTER_MEDIUM + profilePath)
                 .into(holder.posterView)
         }
         holder.title.text = itemData?.title
@@ -62,6 +63,9 @@ constructor(private val allItemListener: IAllItemListener) : RecyclerView.Adapte
 
         val movie = item as? Movie
         movie?.let { return ItemData(movie.posterPath!!, movie.title!!) }
+
+        val tv = item as? TV
+        tv?.let { return ItemData(tv.posterPath!!, tv.name!!) }
 
         return null
     }
