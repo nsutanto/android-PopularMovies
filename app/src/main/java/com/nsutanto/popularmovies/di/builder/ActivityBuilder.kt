@@ -10,6 +10,8 @@ import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragmentModule
 import com.nsutanto.popularmovies.ui.main.tv.TVFragment
 import com.nsutanto.popularmovies.ui.main.tv.TVFragmentModule
+import com.nsutanto.popularmovies.ui.tv_detail.TVDetailActivity
+import com.nsutanto.popularmovies.ui.tv_detail.TVDetailActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -37,6 +39,12 @@ interface ActivityBuilder {
         MovieDetailActivityModule::class
     ])
     fun detailMovieActivity(): MovieDetailActivity
+
+    @ContributesAndroidInjector(modules =
+    [
+        TVDetailActivityModule::class
+    ])
+    fun detailTVActivity(): TVDetailActivity
 
     @ContributesAndroidInjector(modules =
     [
