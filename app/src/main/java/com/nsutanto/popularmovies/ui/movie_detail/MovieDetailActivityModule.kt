@@ -1,7 +1,7 @@
 package com.nsutanto.popularmovies.ui.movie_detail
 
 import com.nsutanto.popularmovies.data.model.Movie
-import com.nsutanto.popularmovies.ui.main.MainActivity
+import com.nsutanto.popularmovies.utils.AppConstants.MOVIE_INTENT
 import dagger.Module
 import dagger.Provides
 
@@ -15,12 +15,12 @@ class MovieDetailActivityModule {
 
     @Provides
     fun provideMovie(activity: MovieDetailActivity): Movie {
-        return activity.intent.getParcelableExtra(MainActivity.MOVIE_INTENT)
+        return activity.intent.getParcelableExtra(MOVIE_INTENT)
     }
 
     @Provides
     fun provideMovieId(activity: MovieDetailActivity): Int {
-        val movie = activity.intent.getParcelableExtra(MainActivity.MOVIE_INTENT) as Movie
+        val movie = activity.intent.getParcelableExtra(MOVIE_INTENT) as Movie
         return movie.id!!
     }
 }
