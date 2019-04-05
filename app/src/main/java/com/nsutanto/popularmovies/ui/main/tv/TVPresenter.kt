@@ -1,5 +1,6 @@
 package com.nsutanto.popularmovies.ui.main.tv
 
+import com.nsutanto.popularmovies.data.model.TV
 import com.nsutanto.popularmovies.data.model.TVResponse
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import javax.inject.Inject
@@ -10,8 +11,9 @@ class TVPresenter @Inject
     private var popularTV: TVResponse? = null
     private var topRatedTV: TVResponse? = null
     private var viewModel: MainViewModel? = null
-    private var popularTVPage = 1
-    private var topRatedTVPage = 1
+
+    private var popularTVList = mutableListOf<TV>()
+    private var topRatedTVList = mutableListOf<TV>()
 
     override fun create() {
         viewModel = view.getViewModel()
@@ -29,21 +31,29 @@ class TVPresenter @Inject
 
     override fun onUpdatedPopularTV(tvResponse: TVResponse) {
         popularTV = tvResponse
+        tvResponse.results?.let { popularTVList.addAll(tvResponse.results) }
         popularTV?.let { view.showPopularTV(popularTV!!)}
     }
 
     override fun onUpdatedTopRatedTV(tvResponse: TVResponse) {
         topRatedTV = tvResponse
+        tvResponse.results?.let { topRatedTVList.addAll(tvResponse.results) }
         topRatedTV?.let { view.showTopRatedTV(topRatedTV!!)}
     }
 
     override fun fetchPopularTV() {
-        viewModel?.getPopularTV(popularTVPage)
-        popularTVPage++
+        viewModel?.getPopularTV()
     }
 
     override fun fetchTopRatedTV() {
-        viewModel?.getTopRatedTV(topRatedTVPage)
-        topRatedTVPage++
+        viewModel?.getTopRatedTV()
+    }
+
+    override fun onAllPopularTVClicked() {
+        view.showAllPopularTV(popularTVList)
+    }
+
+    override fun onAllTopRatedTVClicked() {
+        view.showAllTopRatedTV(topRatedTVList)
     }
 }
