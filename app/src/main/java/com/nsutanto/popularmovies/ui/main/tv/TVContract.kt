@@ -1,5 +1,6 @@
 package com.nsutanto.popularmovies.ui.main.tv
 
+import com.nsutanto.popularmovies.data.model.TV
 import com.nsutanto.popularmovies.data.model.TVResponse
 import com.nsutanto.popularmovies.ui.base.presenter.BasePresenter
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
@@ -12,6 +13,10 @@ class TVContract {
 
         fun showTopRatedTV(tvResponse: TVResponse)
 
+        fun showAllPopularTV(tvs: List<TV>)
+
+        fun showAllTopRatedTV(tvs: List<TV>)
+
         fun getViewModel(): MainViewModel
     }
 
@@ -20,6 +25,10 @@ class TVContract {
         fun onUpdatedPopularTV(tvResponse: TVResponse)
 
         fun onUpdatedTopRatedTV(tvResponse: TVResponse)
+
+        fun onAllPopularTVClicked()
+
+        fun onAllTopRatedTVClicked()
 
         fun fetchPopularTV()
 
