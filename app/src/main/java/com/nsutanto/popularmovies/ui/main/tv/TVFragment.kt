@@ -16,14 +16,19 @@ import com.nsutanto.popularmovies.ui.base.view.BaseFragment
 import com.nsutanto.popularmovies.utils.AppConstants.INVALID_ACTIVITY
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
+import kotlinx.android.synthetic.main.fragment_tv.*
 import kotlinx.android.synthetic.main.layout_popular_tv_list.*
+import kotlinx.android.synthetic.main.layout_popular_tv_list.view.*
 import kotlinx.android.synthetic.main.layout_top_rated_tv_list.*
+import kotlinx.android.synthetic.main.layout_top_rated_tv_list.view.*
 import javax.inject.Inject
 
 class TVFragment : BaseFragment(), TVContract.View {
 
     interface ITVListener {
         fun onTVClicked(tv: TV)
+        fun onAllPopularTVClicked(tvs: List<TV>)
+        fun onAllTopRatedTVClicked(tvs: List<TV>)
     }
 
     @Inject
@@ -60,6 +65,10 @@ class TVFragment : BaseFragment(), TVContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setRecyclerView()
+
+        // button all clicked
+        layout_popular_tv.btn_all_popular_tv.setOnClickListener { presenter.onAllPopularTVClicked() }
+        layout_top_rated_tv.btn_all_top_rated_tv.setOnClickListener { presenter.onAllTopRatedTVClicked() }
     }
 
     override fun onAttach(context: Context) {
@@ -85,6 +94,14 @@ class TVFragment : BaseFragment(), TVContract.View {
     override fun showTopRatedTV(tvResponse: TVResponse) {
         topRatedTVAdapter.setTVs(tvResponse.results)
         pb_top_rated_tv.visibility = View.GONE
+    }
+
+    override fun showAllPopularTV(tvs: List<TV>) {
+        tvListener.onAllPopularTVClicked(tvs)
+    }
+
+    override fun showAllTopRatedTV(tvs: List<TV>) {
+        tvListener.onAllTopRatedTVClicked(tvs)
     }
 
     private fun setRecyclerView() {
