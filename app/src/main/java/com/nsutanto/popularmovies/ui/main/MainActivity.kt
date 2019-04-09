@@ -13,8 +13,13 @@ import com.nsutanto.popularmovies.ui.all_item.AllItemActivity
 import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
 import com.nsutanto.popularmovies.ui.main.movie.MovieFragment
 import com.nsutanto.popularmovies.ui.main.tv.TVFragment
+import com.nsutanto.popularmovies.ui.tv_detail.TVDetailActivity
+import com.nsutanto.popularmovies.utils.AppConstants
+import com.nsutanto.popularmovies.utils.AppConstants.ALL_ITEM_TYPE_INTENT
 import com.nsutanto.popularmovies.utils.AppConstants.MOVIE_INTENT
-import com.nsutanto.popularmovies.utils.AppConstants.POPULAR_MOVIE_LIST_INTENT
+import com.nsutanto.popularmovies.utils.AppConstants.MOVIE_LIST_INTENT
+import com.nsutanto.popularmovies.utils.AppConstants.TV_INTENT
+import com.nsutanto.popularmovies.utils.AppConstants.TV_LIST_INTENT
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
 import org.jetbrains.anko.startActivity
@@ -79,11 +84,24 @@ class MainActivity : BaseActivity(),
 
     // TV Screen Listener
     override fun onTVClicked(tv: TV) {
-        startActivity<MovieDetailActivity>(MOVIE_INTENT to tv)
+        startActivity<TVDetailActivity>(TV_INTENT to tv)
     }
 
+    // Btn All Listener
     override fun onAllPopularMovieClicked(movies: List<Movie>) {
-        startActivity<AllItemActivity>(POPULAR_MOVIE_LIST_INTENT to movies)
+        startActivity<AllItemActivity>(MOVIE_LIST_INTENT to movies, ALL_ITEM_TYPE_INTENT to AppConstants.AllItemType.POPULAR_MOVIE)
+    }
+
+    override fun onAllTopRatedMovieClicked(movies: List<Movie>) {
+        startActivity<AllItemActivity>(MOVIE_LIST_INTENT to movies, ALL_ITEM_TYPE_INTENT to AppConstants.AllItemType.TOP_RATED_MOVIE)
+    }
+
+    override fun onAllPopularTVClicked(tvs: List<TV>) {
+        startActivity<AllItemActivity>(TV_LIST_INTENT to tvs, ALL_ITEM_TYPE_INTENT to AppConstants.AllItemType.POPULAR_TV)
+    }
+
+    override fun onAllTopRatedTVClicked(tvs: List<TV>) {
+        startActivity<AllItemActivity>(TV_LIST_INTENT to tvs, ALL_ITEM_TYPE_INTENT to AppConstants.AllItemType.TOP_RATED_TV)
     }
 
     private fun setupViewPager() {
