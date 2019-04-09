@@ -26,6 +26,11 @@
                 android:theme="@style/AppTheme.TranslucentStatusBar">
         </activity>
         <activity
+                android:name="com.nsutanto.popularmovies.ui.tv_detail.TVDetailActivity"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.TranslucentStatusBar">
+        </activity>
+        <activity
                 android:name="com.nsutanto.popularmovies.ui.all_item.AllItemActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar">
