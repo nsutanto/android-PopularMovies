@@ -109,5 +109,6 @@ dependencies {
     androidTestImplementation "com.github.javafaker:javafaker:$java_faker_version"
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
 
 }
