@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.ui.base.view.BaseActivity
 import com.nsutanto.popularmovies.utils.AppConstants
-import com.nsutanto.popularmovies.viewmodel.MovieDetailViewModel
-import com.nsutanto.popularmovies.viewmodel.MovieDetailViewModelFactory
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import javax.inject.Inject
 import android.content.Intent
 import android.net.Uri
 import com.nsutanto.popularmovies.data.model.*
+import com.nsutanto.popularmovies.viewmodel.TVDetailViewModel
+import com.nsutanto.popularmovies.viewmodel.TVDetailViewModelFactory
 
 class TVDetailActivity : BaseActivity(),
                             VideoAdapter.IMovieDetailListener,
@@ -26,7 +26,7 @@ class TVDetailActivity : BaseActivity(),
     lateinit var presenter: TVDetailContract.Presenter
 
     @Inject
-    lateinit var factory: MovieDetailViewModelFactory
+    lateinit var factory: TVDetailViewModelFactory
 
     private lateinit var videoAdapter: VideoAdapter
     private lateinit var castAdapter: CastAdapter
@@ -76,8 +76,8 @@ class TVDetailActivity : BaseActivity(),
         castAdapter.setCasts(creditResponse.cast)
     }
 
-    override fun getViewModel(): MovieDetailViewModel {
-        return ViewModelProviders.of(this, factory).get(MovieDetailViewModel::class.java)
+    override fun getViewModel(): TVDetailViewModel {
+        return ViewModelProviders.of(this, factory).get(TVDetailViewModel::class.java)
     }
 
     // Video Listener
