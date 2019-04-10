@@ -23,4 +23,6 @@ interface ApiSource {
 
     fun getTVReviews(id: Int): Observable<Review>
 
+    fun getTVCredit(id: Int): Observable<CreditResponse>
+
 }
