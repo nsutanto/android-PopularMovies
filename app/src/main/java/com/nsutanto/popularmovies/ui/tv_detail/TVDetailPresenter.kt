@@ -3,7 +3,7 @@ package com.nsutanto.popularmovies.ui.tv_detail
 import com.nsutanto.popularmovies.data.model.CreditResponse
 import com.nsutanto.popularmovies.data.model.MovieVideosResponse
 import com.nsutanto.popularmovies.data.model.TV
-import com.nsutanto.popularmovies.viewmodel.MovieDetailViewModel
+import com.nsutanto.popularmovies.viewmodel.TVDetailViewModel
 import javax.inject.Inject
 
 class TVDetailPresenter
@@ -12,7 +12,7 @@ class TVDetailPresenter
                 private val tv: TV
     ) : TVDetailContract.Presenter {
 
-    private var viewModel: MovieDetailViewModel? = null
+    private var viewModel: TVDetailViewModel? = null
 
     override fun create() {
 
@@ -20,8 +20,8 @@ class TVDetailPresenter
 
     override fun start() {
         viewModel = view.getViewModel()
-        viewModel?.getMovieVideos()
-        viewModel?.getMovieCredits()
+        viewModel?.getTVVideos()
+        viewModel?.getTVCredits()
 
         view.showTVDetail(tv)
     }
