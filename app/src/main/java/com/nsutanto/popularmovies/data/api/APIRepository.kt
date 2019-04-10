@@ -56,4 +56,9 @@ constructor(private val apiFactory: APIFactory) : ApiSource {
         return tmdbService.getTVReviews(id)
             .subscribeOn(Schedulers.newThread())
     }
+
+    override fun getTVCredit(id: Int): Observable<CreditResponse> {
+        return tmdbService.getTVCredit(id)
+            .subscribeOn(Schedulers.newThread())
+    }
 }
