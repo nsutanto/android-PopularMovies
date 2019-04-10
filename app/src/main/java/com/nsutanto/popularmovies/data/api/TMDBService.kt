@@ -37,4 +37,7 @@ interface TMDBService {
     @GET("tv/{id}/reviews")
     fun getTVReviews(@Path("id") id: Int): Observable<Review>
 
+    @GET("tv/{id}/credits")
+    fun getTVCredit(@Path("id") id: Int): Observable<CreditResponse>
+
 }
