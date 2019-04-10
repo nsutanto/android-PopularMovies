@@ -4,7 +4,7 @@ import com.nsutanto.popularmovies.data.model.CreditResponse
 import com.nsutanto.popularmovies.data.model.MovieVideosResponse
 import com.nsutanto.popularmovies.data.model.TV
 import com.nsutanto.popularmovies.ui.base.presenter.BasePresenter
-import com.nsutanto.popularmovies.viewmodel.MovieDetailViewModel
+import com.nsutanto.popularmovies.viewmodel.TVDetailViewModel
 
 interface TVDetailContract {
 
@@ -15,7 +15,7 @@ interface TVDetailContract {
 
         fun showCredits(creditResponse: CreditResponse)
 
-        fun getViewModel(): MovieDetailViewModel
+        fun getViewModel(): TVDetailViewModel
     }
     interface Presenter : BasePresenter {
         fun onUpdatedVideos(videosResponse: MovieVideosResponse)
