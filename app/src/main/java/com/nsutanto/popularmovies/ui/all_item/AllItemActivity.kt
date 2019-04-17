@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nsutanto.popularmovies.R
 import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.data.model.MovieResponse
+import com.nsutanto.popularmovies.data.model.TV
 import com.nsutanto.popularmovies.data.model.TVResponse
 import com.nsutanto.popularmovies.ui.base.view.BaseActivity
 import com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity
+import com.nsutanto.popularmovies.ui.tv_detail.TVDetailActivity
 import com.nsutanto.popularmovies.utils.AppConstants
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 import com.nsutanto.popularmovies.viewmodel.MainViewModelFactory
@@ -31,8 +33,6 @@ class AllItemActivity : BaseActivity(),
     lateinit var factory: MainViewModelFactory
 
     private lateinit var allItemAdapter: AllItemAdapter
-
-    private lateinit var itemType: AppConstants.AllItemType
 
     private lateinit var mainViewModel: MainViewModel
 
@@ -58,6 +58,10 @@ class AllItemActivity : BaseActivity(),
 
     override fun onMovieClicked(movie: Movie) {
         startActivity<MovieDetailActivity>(AppConstants.MOVIE_INTENT to movie)
+    }
+
+    override fun onTVClicked(tv: TV) {
+        startActivity<TVDetailActivity>(AppConstants.TV_INTENT to tv)
     }
 
     override fun setItems(objects: List<Any>?) {
