@@ -19,6 +19,7 @@ constructor(private val allItemListener: IAllItemListener) : RecyclerView.Adapte
 
     interface IAllItemListener {
         fun onMovieClicked(movie: Movie)
+        fun onTVClicked(tv: TV)
     }
 
     private data class ItemData(val path: String, val title: String)
@@ -34,7 +35,11 @@ constructor(private val allItemListener: IAllItemListener) : RecyclerView.Adapte
         }
 
         override fun onClick(v: View) {
-            allItemListener.onMovieClicked(objects[adapterPosition] as Movie)
+            val movie = objects[adapterPosition] as? Movie
+            movie?.let { allItemListener.onMovieClicked(movie)}
+
+            val tv = objects[adapterPosition] as? TV
+            tv?.let { allItemListener.onTVClicked(tv)}
         }
     }
 
