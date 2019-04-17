@@ -1,6 +1,5 @@
 package com.nsutanto.popularmovies.ui.all_item
 
-import com.nsutanto.popularmovies.data.model.Movie
 import com.nsutanto.popularmovies.utils.AppConstants
 import dagger.Module
 import dagger.Provides
