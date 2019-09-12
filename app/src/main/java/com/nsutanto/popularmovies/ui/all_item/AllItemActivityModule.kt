@@ -16,5 +16,4 @@ class AllItemActivityModule {
     fun bindItemType(activity: AllItemActivity): AppConstants.AllItemType {
         return activity.intent.getSerializableExtra(AppConstants.ALL_ITEM_TYPE_INTENT) as AppConstants.AllItemType
     }
-
 }

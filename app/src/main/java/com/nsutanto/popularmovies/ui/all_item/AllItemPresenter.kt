@@ -29,6 +29,8 @@ constructor(private val view: AllItemContract.View,
         viewModel = view.getViewModel()
 
         fetchData()
+
+        view.setHeaderTitle(itemType)
     }
 
     override fun start() {

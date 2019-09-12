@@ -68,6 +68,16 @@ class AllItemActivity : BaseActivity(),
         allItemAdapter.setItems(objects)
     }
 
+    override fun setHeaderTitle(itemType: AppConstants.AllItemType) {
+
+        when (itemType) {
+            AppConstants.AllItemType.POPULAR_MOVIE -> tv_header.text = getString(R.string.popular_movie)
+            AppConstants.AllItemType.TOP_RATED_MOVIE -> tv_header.text = getString(R.string.top_rated_movie)
+            AppConstants.AllItemType.POPULAR_TV -> tv_header.text = getString(R.string.popular_tv)
+            AppConstants.AllItemType.TOP_RATED_TV -> tv_header.text = getString(R.string.top_rated_tv)
+        }
+    }
+
     private fun calculateNoOfColumns(context: Context): Int {
         val displayMetrics = context.resources.displayMetrics
         val dpWidth = displayMetrics.widthPixels / displayMetrics.density

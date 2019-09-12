@@ -3,6 +3,7 @@ package com.nsutanto.popularmovies.ui.all_item
 import com.nsutanto.popularmovies.data.model.MovieResponse
 import com.nsutanto.popularmovies.data.model.TVResponse
 import com.nsutanto.popularmovies.ui.base.presenter.BasePresenter
+import com.nsutanto.popularmovies.utils.AppConstants
 import com.nsutanto.popularmovies.viewmodel.MainViewModel
 
 interface AllItemContract {
@@ -11,6 +12,8 @@ interface AllItemContract {
         fun getViewModel() : MainViewModel
 
         fun setItems(objects: List<Any>?)
+
+        fun setHeaderTitle(itemType: AppConstants.AllItemType)
     }
 
     interface Presenter : BasePresenter {
