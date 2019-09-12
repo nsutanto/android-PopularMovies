@@ -65,7 +65,7 @@ class MainActivity : BaseActivity(),
         super.onStart()
         presenter.start()
     }
-    
+
 
     override fun getViewModel(): MainViewModel {
         return ViewModelProviders.of(this, factory).get(MainViewModel::class.java)
