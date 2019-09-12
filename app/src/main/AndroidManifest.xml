@@ -23,17 +23,21 @@
         <activity
                 android:name="com.nsutanto.popularmovies.ui.movie_detail.MovieDetailActivity"
                 android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.TranslucentStatusBar">
+                android:theme="@style/AppTheme.TranslucentStatusBar"
+                android:parentActivityName="com.nsutanto.popularmovies.ui.main.MainActivity" >
+                >
         </activity>
         <activity
                 android:name="com.nsutanto.popularmovies.ui.tv_detail.TVDetailActivity"
                 android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.TranslucentStatusBar">
+                android:theme="@style/AppTheme.TranslucentStatusBar"
+                android:parentActivityName="com.nsutanto.popularmovies.ui.main.MainActivity">
         </activity>
         <activity
                 android:name="com.nsutanto.popularmovies.ui.all_item.AllItemActivity"
                 android:screenOrientation="portrait"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.NoActionBar"
+                android:parentActivityName="com.nsutanto.popularmovies.ui.main.MainActivity">
         </activity>
     </application>
 

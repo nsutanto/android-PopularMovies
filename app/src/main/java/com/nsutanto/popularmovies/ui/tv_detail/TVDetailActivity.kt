@@ -40,7 +40,6 @@ class TVDetailActivity : BaseActivity(),
         setViewModel()
 
         setSupportActionBar(toolbar_title)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     // View Methods
