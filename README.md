@@ -1,5 +1,7 @@
 # Popular Movies
 
+## [Play Store Listing](https://play.google.com/store/apps/details?id=com.nsutanto.popularmovies)
+
 The popular movies app is an Android app that let you browse popular movies and popular tv shows
 
 API used : [TMDB](https://www.themoviedb.org/?language=en-US)
