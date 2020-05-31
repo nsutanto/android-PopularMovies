@@ -67,10 +67,18 @@ constructor(private val allItemListener: IAllItemListener) : RecyclerView.Adapte
     private fun getItemData(item: Any): ItemData? {
 
         val movie = item as? Movie
-        movie?.let { return ItemData(movie.posterPath!!, movie.title!!) }
+
+        val posterPath = movie?.posterPath
+        val title = movie?.title
+        if (posterPath != null && title != null) {
+            return ItemData(posterPath, title)
+        }
 
         val tv = item as? TV
-        tv?.let { return ItemData(tv.posterPath!!, tv.name!!) }
+        val tvPosterPath = tv?.posterPath
+        val tvName = tv?.name
+        if (tvPosterPath != null && tvName != null)
+        tv?.let { return ItemData(tvPosterPath, tvName) }
 
         return null
     }

@@ -2,6 +2,7 @@ package com.nsutanto.popularmovies
 
 import android.app.Activity
 import android.app.Application
+import com.facebook.stetho.Stetho
 import com.nsutanto.popularmovies.di.component.AppComponent
 import com.nsutanto.popularmovies.di.component.DaggerAppComponent
 import dagger.android.DispatchingAndroidInjector
@@ -19,6 +20,7 @@ class PopularMoviesApp : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+        Stetho.initializeWithDefaults(this)
         component = DaggerAppComponent.builder()
             .application(this)
             .build()

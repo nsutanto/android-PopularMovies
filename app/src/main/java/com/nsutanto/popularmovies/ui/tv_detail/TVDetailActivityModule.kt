@@ -21,6 +21,9 @@ class TVDetailActivityModule {
     @Provides
     fun provideMovieId(activity: TVDetailActivity): Int {
         val tv = activity.intent.getParcelableExtra(TV_INTENT) as TV
-        return tv.id!!
+        tv.id?. let {
+            return it
+        }
+        return 0
     }
 }

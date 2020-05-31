@@ -1,5 +1,6 @@
 package com.nsutanto.popularmovies.data.api
 
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.nsutanto.popularmovies.utils.AppConstants
@@ -37,6 +38,7 @@ constructor() {
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
         return client.newBuilder()
+            .addNetworkInterceptor(StethoInterceptor())
             .addInterceptor(logging)
             .addInterceptor(AuthenticationInterceptor())
             .build()

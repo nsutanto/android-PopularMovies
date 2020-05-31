@@ -32,13 +32,13 @@ class TVPresenter @Inject
     override fun onUpdatedPopularTV(tvResponse: TVResponse) {
         popularTV = tvResponse
         tvResponse.results?.let { popularTVList.addAll(tvResponse.results) }
-        popularTV?.let { view.showPopularTV(popularTV!!)}
+        popularTV?.let { view.showPopularTV(it)}
     }
 
     override fun onUpdatedTopRatedTV(tvResponse: TVResponse) {
         topRatedTV = tvResponse
         tvResponse.results?.let { topRatedTVList.addAll(tvResponse.results) }
-        topRatedTV?.let { view.showTopRatedTV(topRatedTV!!)}
+        topRatedTV?.let { view.showTopRatedTV(it)}
     }
 
     override fun fetchPopularTV() {

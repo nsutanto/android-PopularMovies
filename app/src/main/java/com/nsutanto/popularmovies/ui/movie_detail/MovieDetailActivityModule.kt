@@ -21,6 +21,9 @@ class MovieDetailActivityModule {
     @Provides
     fun provideMovieId(activity: MovieDetailActivity): Int {
         val movie = activity.intent.getParcelableExtra(MOVIE_INTENT) as Movie
-        return movie.id!!
+        movie.id?.let {
+            return it
+        }
+        return 0
     }
 }

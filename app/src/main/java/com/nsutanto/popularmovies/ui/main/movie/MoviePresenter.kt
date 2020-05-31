@@ -31,13 +31,13 @@ class MoviePresenter @Inject
     override fun onUpdatedPopularMovies(movieResponse: MovieResponse) {
         popularMovies = movieResponse
         movieResponse.results?.let { popularMovieList.addAll(movieResponse.results) }
-        popularMovies?.let { view.showPopularMovies(popularMovies!!)}
+        popularMovies?.let { view.showPopularMovies(it)}
     }
 
     override fun onUpdatedTopRatedMovies(movieResponse: MovieResponse) {
         topRatedMovies = movieResponse
         movieResponse.results?.let { topRatedMovieList.addAll(movieResponse.results)}
-        topRatedMovies?.let { view.showTopRatedMovies(topRatedMovies!!)}
+        topRatedMovies?.let { view.showTopRatedMovies(it)}
     }
 
     override fun fetchPopularMovies() {
